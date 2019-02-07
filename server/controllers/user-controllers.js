@@ -27,7 +27,7 @@ module.exports = {
                         token: randomstring.generate()
                     })
                     token.save(function (err) {
-                        if (err) { return res.status(500).send({ msg: err.message }); }
+                        if (err) { return res.status(500).json({ msg: err.message }); }
                         var transporter = nodemailer.createTransport({ 
                             service: 'gmail',
                             auth: {
@@ -103,8 +103,6 @@ module.exports = {
         })
     },
             
-    
-
     confirmation: (req, res) =>{
         Token.findOne({ token: req.params.token }, function (err, token) {
             
@@ -125,6 +123,43 @@ module.exports = {
                     res.status(200).send("The account has been verified. Please log in.");
                 });
             });
+        });
+    },
+
+    resendToken: (req, res) =>{
+        console.log(`masuk`);
+        
+        User.findOne({ email: req.body.email }, function (err, user) {
+            if (!user) return res.status(400).send({ msg: 'We were unable to find a user with that email.' });
+            if (user.isVerified) return res.status(400).send({ msg: 'This account has already been verified. Please log in.' });
+     
+            var token = new Token({ 
+                _userId: user._id, 
+                token: randomstring.generate() });
+     
+            token.save(function (err) {
+                if (err) { return res.status(500).send({ msg: err.message }); }
+     
+                // Send the email
+                var transporter = nodemailer.createTransport({ 
+                    service: 'gmail',
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                });
+                var mailOptions = { 
+                    from: 'no-reply@yourwebapplication.com', 
+                    to: user.email, 
+                    subject: 'Account Verification', 
+                    text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/api' + '\/users' + '\/confirmation\/' + token.token + '\n' 
+                };
+                transporter.sendMail(mailOptions, function (err) {
+                    if (err) { return res.status(500).send({ msg: err.message }); }
+                    res.status(200).json('A verification email has been sent to ' + user.email + '.');
+                });
+            });
+     
         });
     },
 
