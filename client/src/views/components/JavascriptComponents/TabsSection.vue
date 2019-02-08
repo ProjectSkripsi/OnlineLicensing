@@ -78,9 +78,9 @@
                             1.  Surat Pernyataan Kedudukan Usaha/Badan Usaha<br>
                             2.	Scan KTP Pemohon, dan Scan KTP penerima kuasa (jika proses permohonan dikuasakan)	<br>
                             3.	Scan NPWP Pemohon	<br>
-                            4.	Isi Formulir Permohonan, dilengkapi dengan Surat Kuasa Pengurusan (jika proses permohonan dikuasakan)	<br>
+                            4.	Isi Formulir Permohonan	<br>
                             5.	Surat Pernyataan (belum memiliki SIUP, bukan mini market, dan peruntukan kantor)	<br>
-                            6.	Softcopy Pas Foto Penanggung Jawab Perusahaan/Pemohon (berwarna, ukuran 3 x 4)
+                            6.	Scan Pas Foto Penanggung Jawab Perusahaan/Pemohon (berwarna, ukuran 3 x 4)
                         </p>
                     </tab-pane>
                 </card>

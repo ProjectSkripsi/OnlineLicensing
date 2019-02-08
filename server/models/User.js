@@ -6,13 +6,9 @@ const Token = require('./Token')
 require('dotenv').config()
 
 const userSchema = new Schema({
-    firstName: {
+    name: {
         type: String,
         required: [true, `Please input your first name`]
-    },
-    lastName: {
-        type: String,
-        required: [true, `Please input your last name`]
     },
     email: {
         type: String,

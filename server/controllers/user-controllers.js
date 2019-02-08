@@ -8,23 +8,21 @@ require('dotenv').config()
 
 module.exports = {
     signUp: (req, res) =>{
-        let firstName = req.body.firstName
-        let lastName = req.body.lastName
+        let name = req.body.name
         let email = req.body.email
         let password = hash.encode(req.body.password)
         User.find({ email: email })
         .then(user => {
             if (user.length === 0) {
                 User.create({
-                    firstName,
-                    lastName,
+                    name,
                     email,
                     password
                 })
                 .then(newUser => {
                     let token = new Token({
                         _userId: newUser._id,
-                        token: randomstring.generate()
+                        token: randomstring.generate(7)
                     })
                     token.save(function (err) {
                         if (err) { return res.status(500).json({ msg: err.message }); }
@@ -39,7 +37,7 @@ module.exports = {
                             from: 'no-reply@yourwebapplication.com', 
                             to: newUser.email, 
                             subject: 'Account Verification', 
-                            text: 'Hello,\n\n' + 'Please verify your account by clicking the link: \nhttp:\/\/' + req.headers.host + '\/api' + '\/users' + '\/confirmation\/' + token.token + '\n' 
+                            text: 'Hello,\n\n' + 'Please verify your account by the code: '+ token.token + '\n' 
                         };
                         transporter.sendMail(mailOptions, function (err) {
                             if (err) { return res.status(500).send({ msg: err.message }); }
@@ -76,9 +74,10 @@ module.exports = {
                             err: false,
                             msg: `Succesfully Login`,
                             email: user.email,
+                            name: user.name,
                             token: hash.jwtEncode({
                                 id: user._id,
-                                firstName: user.firstName,
+                                name: user.name,
                                 role: user.role
                             })
                         })
@@ -97,20 +96,22 @@ module.exports = {
             
         })
         .catch(err => {
-            res.status(400).json({ 
+            res.status(500).json({ 
                 msg: 'The email address ' + req.body.email + ' is not associated with any account. Double-check your email address and try again.'
             })
         })
     },
             
     confirmation: (req, res) =>{
-        Token.findOne({ token: req.params.token }, function (err, token) {
+        console.log(req.body.token);
+        
+        Token.findOne({ token: req.body.token }, function (err, token) {
             
             if (!token) return res.status(400).json({ 
                 type: 'not-verified', 
                 msg: 'We were unable to find a valid token. Your token my have expired.' 
             });
-            User.findOne({ _id: token._userId }, function (err, user) {
+            User.findOne({ _id: token._userId, email: req.body.email }, function (err, user) {
                 if (!user) return res.status(400).json({ 
                     msg: 'We were unable to find a user for this token.' 
                 });
@@ -171,6 +172,24 @@ module.exports = {
         .catch(err =>{
             res.status(500).json(err)
         })
-    }
+    },
+
+    getOne: (req, res) => {
+        User.findById({_id: req.decoded.id})
+        .then( response => {
+            let user = {
+                name: response.name,
+                _id: response._id,
+                email: response.email,
+                role: response.role
+            }
+            res.status(200).json(user)
+        })
+        .catch( err => {
+            res.status(500).json(err)
+            console.log(`inii`,err);
+            
+        })
+    },
 
 }

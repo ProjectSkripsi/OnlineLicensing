@@ -19,7 +19,7 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Sign In </small>
+                                <small>Confirmation For Activation Account </small>
                             </div>
                         </template>
                         <template>
@@ -31,32 +31,19 @@
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
                                 <base-input alternative
-                                            type="password"
-                                            v-model="password"
-                                            placeholder="Password"
-                                            addon-left-icon="ni ni-lock-circle-open">
+                                            class="mb-3"
+                                            v-model="token"
+                                            placeholder="Confirmation Code"
+                                            addon-left-icon="ni ni-email-83">
                                 </base-input>
-                                <base-checkbox>
-                                    Remember me
-                                </base-checkbox>
                                 <div class="text-center">
-                                    <base-button type="primary" @click.prevent="doLogin" class="my-4">Sign In</base-button>
+                                    <base-button type="primary" @click="doConfirm" class="my-4">Confirm</base-button>
                                 </div>
                             </form>
                         </template>
                     </card>
                     <div class="row mt-3">
-                        <div class="col-6">
-                            <a href="#" class="text-light">
-                                <small>Forgot password?</small>
-                            </a>
-                        </div>
-                        <div class="col-6 text-right">
-                            <router-link to="/register">
-                            <a href="#" class="text-light">
-                                <small>Create new account</small>
-                            </a></router-link>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -65,30 +52,39 @@
 </template>
 <script>
 import {mapActions, mapState} from 'vuex'
+import axios from 'axios'
+const baseUrl = `http://localhost:3000`
 export default {
     name: `Login`,
     data() {
         return {
             email: '',
-            password: ''
+            token: '',
         }
     },
 
     methods: {
-        ...mapActions(['login']),
-        doLogin(){
-            if(this.email === ''){
+        doConfirm(){
+            if(this.email === '' || this.token === ''){
                 swal({
                     title: "Notice",
                     text: "Please Input email Incorrect",
                     icon: "error",
                 });
-            }
-            let data = {
-                email: this.email,
-                password: this.password
-            }
-            this.login(data)
+            } else {
+                axios({
+                    url: baseUrl+ `/api/users/confirmation`,
+                    method: 'POST',
+                    data: {
+                        token: this.token,
+                        email: this.email
+                    }
+                })
+                .then(response =>{
+                    swal("Good job!", "Your account is confirmed! Please Login", "success");
+                    this.$router.push('/login')
+                })
+            } 
         }
         
     },

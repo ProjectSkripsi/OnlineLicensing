@@ -59,64 +59,46 @@
                 </base-dropdown>
             </ul>
             <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-                <li class="nav-item">
-                    <base-button tag="a"
+                
+                <li class="nav-item" v-show="!isLoggedIn">
+                    <router-link to="/login"><base-button tag="a"
                                 href="#"
                                 class="mb-3 mb-sm-0"
                                 type="info"
                                 icon="fa fa-sign-in">
-                        <router-link to="/login">Login</router-link>
-                    </base-button>
+                        Login
+                    </base-button></router-link>
                 </li>
-                <li class="nav-item">
-                    <base-button tag="a"
+                <li class="nav-item" v-show="!isLoggedIn">
+                    <router-link to="/register"><base-button tag="a"
                                 href="#"
                                 class="mb-3 mb-sm-0"
                                 type="info"
                                 icon="fa fa-user-plus">
-                        <router-link to="/register">Register</router-link>
-                    </base-button>
+                        Register
+                    </base-button></router-link>
                 </li>
+                
             </ul>
-            <!-- <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://www.facebook.com/creativetim" target="_blank"
-                       data-toggle="tooltip" title="Like us on Facebook">
-                        <i class="fa fa-facebook-square"></i>
-                        <span class="nav-link-inner--text d-lg-none">Facebook</span>
+            <ul class="navbar-nav navbar-nav-hover align-items-lg-center" v-show="isLoggedIn">
+                <base-dropdown tag="li" class="nav-item">
+                    <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
+                        <i class="ni ni-collection d-lg-none"></i>
+                        <span class="nav-link-inner--text">{{ user.name }}</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://www.instagram.com/creativetimofficial"
-                       target="_blank" data-toggle="tooltip" title="Follow us on Instagram">
-                        <i class="fa fa-instagram"></i>
-                        <span class="nav-link-inner--text d-lg-none">Instagram</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://twitter.com/creativetim" target="_blank"
-                       data-toggle="tooltip" title="Follow us on Twitter">
-                        <i class="fa fa-twitter-square"></i>
-                        <span class="nav-link-inner--text d-lg-none">Twitter</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="https://github.com/creativetimofficial/vue-argon-design-system"
-                       target="_blank" data-toggle="tooltip" title="Star us on Github">
-                        <i class="fa fa-github"></i>
-                        <span class="nav-link-inner--text d-lg-none">Github</span>
-                    </a>
-                </li>
-                <li class="nav-item d-none d-lg-block ml-lg-4">
-                    <a href="https://www.creative-tim.com/product/vue-argon-design-system" target="_blank"
-                       class="btn btn-neutral btn-icon">
-                <span class="btn-inner--icon">
-                  <i class="fa fa-cloud-download mr-2"></i>
-                </span>
-                        <span class="nav-link-inner--text">Download</span>
-                    </a>
-                </li>
-            </ul> -->
+                    <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
+                    <router-link to="/profile" class="dropdown-item">Profile</router-link>
+                    <router-link @click="doLogout" to="/"  class="dropdown-item">Logout</router-link>
+                    <router-link to="/"><base-button tag="a"
+                                href="#"
+                                @click="doLogout"
+                                class="mb-3 mb-sm-0"
+                                type="info"
+                               >
+                        logout
+                    </base-button></router-link>
+                </base-dropdown>
+            </ul>
         </base-nav>
     </header>
 </template>
@@ -124,13 +106,31 @@
 import BaseNav from "@/components/BaseNav";
 import BaseDropdown from "@/components/BaseDropdown";
 import CloseButton from "@/components/CloseButton";
-
+import {mapActions, mapState} from 'vuex'
 export default {
-  components: {
-    BaseNav,
-    CloseButton,
-    BaseDropdown
-  }
+    components: {
+        BaseNav,
+        CloseButton,
+        BaseDropdown
+    },
+    methods: {
+        doLogout: function(){
+            localStorage.removeItem('token')
+            this.$store.dispatch('logout')
+            .then(()=>{
+                this.$router.push('/')
+            })
+        },
+    },
+
+    computed: {
+        ...mapState(['user', 'token']),
+        isLoggedIn : function(){
+            return this.$store.getters.isLoggedIn
+        }
+    }
+
+
 };
 </script>
 <style>
