@@ -1,9 +1,5 @@
 const moongose = require('mongoose')
 const Schema = moongose.Schema;
-const hash = require('../helpers/hash')
-const nodemailer = require('nodemailer')
-const Token = require('./Token')
-require('dotenv').config()
 
 const userSchema = new Schema({
     name: {
@@ -33,6 +29,10 @@ const userSchema = new Schema({
     role: { 
         type: String, 
         default: 'member'
+    },
+    request: {
+        type: Schema.Types.ObjectId,
+        ref: 'Request'
     },
     deleteAt: {
         type: Date,

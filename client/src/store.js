@@ -14,6 +14,10 @@ export default new Vuex.Store({
         user: {},
 		status: '',
 		token: localStorage.getItem('token') || '',
+		myRequest: [],
+		myNewRequest: [],
+		myOnProcces: [],
+
     },
 
     mutations: {
@@ -32,8 +36,16 @@ export default new Vuex.Store({
 	    	state.token = ''
 		},
 		auth_user(state, user){
-			// console.log(`mutate`, user);
 			state.user = user
+		},
+		auth_request(state, request){
+			state.myRequest = request
+		},
+		new_request(state, newrequest){
+			state.myNewRequest = newrequest
+		},
+		on_procces(state, onProc){
+			state.myOnProcces = onProc
 		}
     },
 
@@ -127,6 +139,57 @@ export default new Vuex.Store({
 				swal("Good job!", "Your account is confirmed", "success");
 				this.$router.push('/login')
 				
+			})
+		},
+
+		myRequest({commit}, payload){
+			axios({
+				url: baseUrl + `/api/request/myRequest`,
+				method: 'GET',
+				headers: {
+					token: localStorage.getItem('token')
+				}
+			})
+			.then(response =>{
+				let request = response.data
+				commit('auth_request', request)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		newRequest({commit}, payload){
+			axios({
+				url: baseUrl+ `/api/request/newRequest`,
+				method: `GET`,
+				headers: {
+					token: localStorage.getItem('token')
+				}
+			})
+			.then(response =>{
+				let data = response.data
+				commit('new_request', data)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		onRequest({commit}, payload){
+			axios({
+				url: baseUrl + `/api/request/onRequest`,
+				method: `GET`,
+				headers: {
+					token: localStorage.getItem('token')
+				}
+			})
+			.then(response =>{
+				let onProc = response.data
+				commit(`on_procces`, onProc)
+			})
+			.catch(err =>{
+				console.log(err);
 			})
 		}
 	},

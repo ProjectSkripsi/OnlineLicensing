@@ -1,5 +1,6 @@
 <template>
 <div class="dashboard">
+    <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="/"><img src="img/brand/white.png"></a>
@@ -47,8 +48,11 @@
             </div>
         </div>
     </nav>
+    <!-- end navbar -->
+    
     <section class="section section-components" id="dashboard">
         <div class="container">
+            <div id="alert"></div>
             <h3 class="h4 text-success font-weight-bold mb-4 mt--90">Dashboard</h3>
             <div class="row justify-content-center">
                 <div class="col-lg">
@@ -71,7 +75,7 @@
                                                         <card class="border-0 text-center" hover shadow body-classes="py-5">
                                                             <img src="img/icons/icon-izin-baru.png" height="100px">
                                                             <h6>Izin Baru</h6>
-                                                            <p class="description mt-3"> 0 </p>
+                                                            <p class="description mt-3"> {{ myNewRequest.length }} </p>
                                                             
                                                         </card>
                                                     </div>
@@ -79,7 +83,7 @@
                                                         <card class="border-0 text-center" hover shadow body-classes="py-5">
                                                             <img src="img/icons/izin-dalam-proses.png" height="100px">
                                                             <h6>Izin dalam proses</h6>
-                                                            <p class="description mt-3">0</p>
+                                                            <p class="description mt-3"> {{ myOnProcces.length }}</p>
                                                         </card>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -141,36 +145,36 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Nama Lengkap:</p><input type="text" class="form-control" placeholder="Nama Lengkap">
+                                                        <p class="description">Nama Lengkap:</p><input type="text" v-model="nameApplication" class="form-control" placeholder="Nama Lengkap">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Alamat Lengkap:</p><input type="text" placeholder="Alamat Lengkap" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <p class="description">Tempat Lahir:</p><input type="text" class="form-control" placeholder="Tempat Lahir">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <p class="description">Tanggal Lahir:</p><input type="date" placeholder="Tanggal Lahir" class="form-control" />
+                                                        <p class="description">Alamat Lengkap:</p><input type="text" v-model="addressApplication" placeholder="Alamat Lengkap" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">No.KTP/Passport:</p><input type="number" class="form-control" placeholder="No.KTP/Passport">
+                                                        <p class="description">Tempat Lahir:</p><input type="text" v-model="birthPlace" class="form-control" placeholder="Tempat Lahir">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">No.Telepon/HP:</p><input type="number" placeholder="No.Telepon/HP" class="form-control" />
+                                                        <p class="description">Tanggal Lahir:</p><input type="date" v-model="birthDate" placeholder="Tanggal Lahir" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <p class="description">No.KTP/Passport:</p><input type="number" v-model="identityNumber" class="form-control" placeholder="No.KTP/Passport">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <p class="description">No.Telepon/HP:</p><input type="number" v-model="contactApplication" placeholder="No.Telepon/HP" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -185,48 +189,48 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Nama Perusahaan:</p><input type="text" class="form-control" placeholder="Nama Perusahaan">
+                                                        <p class="description">Nama Perusahaan:</p><input type="text" v-model="companyName" class="form-control" placeholder="Nama Perusahaan">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Alamat Perusahaan:</p><input type="text" placeholder="Alamat Perusahaan" class="form-control" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <p class="description">No.Telp/Fax:</p><input type="number" class="form-control" placeholder="No.Telp/Fax">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <p class="description">Provinsi:</p><input type="text" placeholder="Provinsi" class="form-control" />
+                                                        <p class="description">Alamat Perusahaan:</p><input type="text" v-model="companyAddress" placeholder="Alamat Perusahaan" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Kabupaten/Kota/Kotamadya:</p><input type="text" class="form-control" placeholder="Kabupaten / Kota / Kotamadya">
+                                                        <p class="description">No.Telp/Fax:</p><input type="number" v-model="companyContact" class="form-control" placeholder="No.Telp/Fax">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Kecamatan:</p><input type="text" placeholder="Kecamatan" class="form-control" />
+                                                        <p class="description">Provinsi:</p><input type="text" v-model="province" placeholder="Provinsi" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Kelurahan/Desa:</p><input type="text" class="form-control" placeholder="Kelurahan/Desa">
+                                                        <p class="description">Kabupaten/Kota/Kotamadya:</p><input v-model="city" type="text" class="form-control" placeholder="Kabupaten / Kota / Kotamadya">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Kode Pos:</p><input type="number" placeholder="Kode Pos" class="form-control" />
+                                                        <p class="description">Kecamatan:</p><input type="text" v-model="district" placeholder="Kecamatan" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <p class="description">Kelurahan/Desa:</p><input type="text" v-model="village" class="form-control" placeholder="Kelurahan/Desa">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <p class="description">Kode Pos:</p><input type="number" v-model="postalCode" placeholder="Kode Pos" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -242,19 +246,19 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">No. Akte:</p><input type="number" class="form-control" placeholder="No. Akte">
+                                                        <p class="description">No. Akte:</p><input type="number" v-model="noAktaPendirian" class="form-control" placeholder="No. Akte">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Tanggal Akte:</p><input type="date" placeholder="Tanggal Akte" class="form-control" />
+                                                        <p class="description">Tanggal Akte:</p><input type="date" v-model="dateAktaPendirian" placeholder="Tanggal Akte" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Tanggal Pengesahan:</p><input type="date" class="form-control" placeholder="Tanggal Pengesahan">
+                                                        <p class="description">Tanggal Pengesahan:</p><input type="date" v-model="dateAktaPengesahan" class="form-control" placeholder="Tanggal Pengesahan">
                                                     </div>
                                                 </div>
                                             </div><hr/>
@@ -262,19 +266,19 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">No. Akte:</p><input type="number" class="form-control" placeholder="No. Akte">
+                                                        <p class="description">No. Akte:</p><input type="number" v-model="noAktaPerubahan" class="form-control" placeholder="No. Akte">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Tanggal Akte:</p><input type="date" placeholder="Tanggal Akte" class="form-control" />
+                                                        <p class="description">Tanggal Akte:</p><input type="date" v-model="dateAktaPerubahan" placeholder="Tanggal Akte" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Tanggal Pengesahan:</p><input type="date" class="form-control" placeholder="Tanggal Pengesahan">
+                                                        <p class="description">Tanggal Pengesahan:</p><input type="date" v-model="dateAktaPengesahanR" class="form-control" placeholder="Tanggal Pengesahan">
                                                     </div>
                                                 </div>
                                             </div>
@@ -282,7 +286,6 @@
                                         </form>
                                     </div>
                                     <div class="container mb-5">
-                                        <!-- Inputs -->
                                         <div class="mb-3">
                                             <small class="text-uppercase font-weight-bold">IV. Kegiatan Usaha</small>
                                         </div><hr>
@@ -290,19 +293,19 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Kelembagaan:</p><input type="text" class="form-control" placeholder="Kelembagaan">
+                                                        <p class="description">Kelembagaan:</p><input type="text" v-model="institutional" class="form-control" placeholder="Kelembagaan">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Kegiatan Usaha:</p><input type="text" placeholder="Kegiatan Usaha" class="form-control" />
+                                                        <p class="description">Kegiatan Usaha:</p><input type="text" v-model="mainBusiness" placeholder="Kegiatan Usaha" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <p class="description">Barang / Jasa Dagangan Utama:</p><input type="text" class="form-control" placeholder="Barang / Jasa Dagangan Utama">
+                                                        <p class="description">Barang / Jasa Dagangan Utama:</p><input type="text" v-model="mainService" class="form-control" placeholder="Barang / Jasa Dagangan Utama">
                                                     </div>
                                                 </div>
                                             </div>
@@ -311,7 +314,7 @@
                                     <div class="text-center">
                                         <base-button tag="a"
                                                     href="#"
-                                                    
+                                                    @click="addRequest"
                                                     class="mb-3 mb-sm-0"
                                                     type="success"
                                                 >
@@ -320,6 +323,140 @@
                                     </div>
                             </tab-pane>
 
+                            <tab-pane key="tab4">
+                                <template slot="title">
+                                    <i class="fa fa-paperclip" aria-hidden="true"></i> Upload Persyaratan
+                                </template>
+                                <tabs fill class="flex-column flex-md-row">
+                                    <card shadow slot-scope="{activeTabIndex}">
+                                        <tab-pane key="tab1">
+                                            <template slot="title">
+                                                <i class="fa fa-id-card-o" aria-hidden="true"></i> KTP
+                                            </template>
+                                            <div class="container">
+                                                <div class="form-group">
+                                                    <p class="description">Nama Perusahaan</p>
+                                                    <select class="form-control" v-model="myCompany">
+                                                        <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
+                                                    </select><br>
+                                                    <p class="description">KTP Pemohon</p>
+                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                </div>
+                                                <div class="text-center">
+                                                    <base-button tag="a"
+                                                                href="#"
+                                                                @click="save"
+                                                                class="mb-3 mb-sm-0"
+                                                                type="success"
+                                                            >
+                                                        upload
+                                                    </base-button>
+                                                </div>
+                                            </div>
+                                        </tab-pane>
+                                        <tab-pane key="tab2">
+                                            <template slot="title">
+                                                <i class="fa fa-credit-card" aria-hidden="true"></i> NPWP 
+                                            </template>
+                                            <div class="container">
+                                                <div class="form-group">
+                                                    <p class="description">Nama Perusahaan</p>
+                                                    <select class="form-control" v-model="myCompany">
+                                                        <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
+                                                    </select><br>
+                                                    <p class="description">NPWP Pemohon</p>
+                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                </div>
+                                                <div class="text-center">
+                                                    <base-button tag="a"
+                                                                href="#"
+                                                                @click="save"
+                                                                class="mb-3 mb-sm-0"
+                                                                type="success"
+                                                            >
+                                                        upload
+                                                    </base-button>
+                                                </div>
+                                            </div>
+                                        </tab-pane>
+                                        <tab-pane key="tab3">
+                                            <template slot="title">
+                                                <i class="fa fa-envelope" aria-hidden="true"></i> Surat Pernyataan KBU
+                                            </template>
+                                            <div class="container">
+                                                <div class="form-group">
+                                                    <p class="description">Nama Perusahaan</p>
+                                                    <select class="form-control" v-model="myCompany">
+                                                        <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
+                                                    </select><br>
+                                                    <p class="description">Surat Pernyataan Kedudukan Badan Usaha:</p>
+                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                </div>
+                                                <div class="text-center">
+                                                    <base-button tag="a"
+                                                                href="#"
+                                                                @click="save"
+                                                                class="mb-3 mb-sm-0"
+                                                                type="success"
+                                                            >
+                                                        upload
+                                                    </base-button>
+                                                </div>
+                                            </div>
+                                        </tab-pane>
+                                        <tab-pane key="tab5">
+                                            <template slot="title">
+                                                <i class="fa fa-envelope-square" aria-hidden="true"></i> Surat Pernyataan belum memiliki SIUP
+                                            </template>
+                                            <div class="container">
+                                                <div class="form-group">
+                                                    <p class="description">Nama Perusahaan:</p>
+                                                    <select class="form-control" v-model="myCompany">
+                                                        <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
+                                                    </select><br>
+                                                    <p class="description">Surat Pernyataan belum memiliki SIUP:</p>
+                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                </div>
+                                                <div class="text-center">
+                                                    <base-button tag="a"
+                                                                href="#"
+                                                                @click="save"
+                                                                class="mb-3 mb-sm-0"
+                                                                type="success"
+                                                            >
+                                                        upload
+                                                    </base-button>
+                                                </div>
+                                            </div>
+                                        </tab-pane>
+                                        <tab-pane key="tab4">
+                                            <template slot="title">
+                                                <i class="fa fa-picture-o" aria-hidden="true"></i> Pas Foto 
+                                            </template>
+                                            <div class="container">
+                                                <div class="form-group">
+                                                    <p class="description">Nama Perusahaan:</p>
+                                                    <select class="form-control" v-model="myCompany">
+                                                        <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
+                                                    </select><br>
+                                                    <p class="description">Pas Foto:</p>
+                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                </div>
+                                                <div class="text-center">
+                                                    <base-button tag="a"
+                                                                href="#"
+                                                                @click="save"
+                                                                class="mb-3 mb-sm-0"
+                                                                type="success"
+                                                            >
+                                                        upload
+                                                    </base-button>
+                                                </div>
+                                            </div>
+                                        </tab-pane>
+                                    </card>
+                                </tabs>
+                            </tab-pane>
                             <tab-pane key="tab3">
                                 <template slot="title">
                                     <i class="fa fa-files-o" aria-hidden="true"></i> Izin Saya
@@ -328,55 +465,25 @@
                                     <thead>
                                         <tr>
                                             <th>ID. Permohonan</th>
-                                            <th>Tanggal Pengajuan</th>
+                                            <th>Pemohon</th>
                                             <th>Nama Perusahaan</th>
-                                            <th>Kegiatan Usaha</th>
+                                            <th>Tanggal Pengajuan</th>
                                             <th>Status Perizinan</th>
                                             <th>Tindakan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
+                                        <tr v-for="data in myRequest" :key="data._id">
+                                            <td>{{ data._id}} </td>
+                                            <td>{{ data.nameApplication }} </td>
+                                            <td>{{ data.companyName }}</td>
+                                            <td>{{ formatDate(data.createdAt) }}</td>
+                                            <td>{{ data.statusApplication }}</td>
+                                            <td> aksi</td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>tdornton</td>
-                                            <td>@fat</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry the Bird</td>
-                                            <td>@twitter</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                            <td>@mdo</td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table>
-                            </tab-pane>
-
-                            <tab-pane key="tab4">
-                                <template slot="title">
-                                    <i class="fa fa-paperclip" aria-hidden="true"></i> Persyaratan
-                                </template>
-                                <h6>1. Surat Izin Usaha Perdagangan</h6>
-                                <p class="description">
-                                    1.  Surat Pernyataan Kedudukan Usaha/Badan Usaha<br>
-                                    2.	Scan KTP Pemohon, dan Scan KTP penerima kuasa (jika proses permohonan dikuasakan)	<br>
-                                    3.	Scan NPWP Pemohon	<br>
-                                    4.	Isi Formulir Permohonan, dilengkapi dengan Surat Kuasa Pengurusan (jika proses permohonan dikuasakan)	<br>
-                                    5.	Surat Pernyataan (belum memiliki SIUP, bukan mini market, dan peruntukan kantor)	<br>
-                                    6.	Softcopy Pas Foto Penanggung Jawab Perusahaan/Pemohon (berwarna, ukuran 3 x 4)
-                                </p>
                             </tab-pane>
                         </card>
                     </tabs>
@@ -386,18 +493,124 @@
     </section>
 </div>
 </template>
+
 <script>
 import {mapActions, mapState} from 'vuex'
 import BaseDropdown from "@/components/BaseDropdown";
 import Tabs from "@/components/Tabs/Tabs.vue";
 import TabPane from "@/components/Tabs/TabPane.vue";
+import axios from 'axios'
+const baseUrl = `http://localhost:3000`
+
+function success(msg) {
+    $("#alert").append(`
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <p>Successfully, ${msg} 👍🏻 </p>
+        </div>
+    `)
+    setTimeout(() => {
+        $("#alert").text("")
+    }, 2000);
+}
+function error(msg) {
+    $("#alert").append(`
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <p><h4>Sorry! ${msg} 👎🏻</h4></p>
+        </div>
+    `)
+    setTimeout(() => {
+        $("#alert").text("")
+    }, 2000);
+}
+
 export default {
     components: {
         BaseDropdown,
         Tabs,
         TabPane
     },
+    data() {
+        return {
+            picture: '',
+            npwp: '',
+            name:'',
+            nameApplication: '',
+            addressApplication: '',
+            birthPlace: '',
+            birthDate: '',
+            contactApplication: '',
+            identityNumber: '',
+            companyName: '',
+            companyAddress: '',
+            companyContact: '',
+            province: '',
+            city: '',
+            district: '',
+            village: '',
+            postalCode: '',
+            noAktaPendirian: '',
+            dateAktaPendirian: '',
+            dateAktaPengesahan: '',
+            noAktaPerubahan: '',
+            dateAktaPerubahan: '',
+            dateAktaPengesahanR: '',
+            institutional: '',
+            mainBusiness: '',
+            mainService: '',
+            myCompany: ''
+        }
+    },
     methods: {
+        ...mapActions(['saveRequest']),
+        addRequest(){
+            axios({
+                url: baseUrl + `/api/request/`,
+                method: `POST`,
+                headers:{
+                    token: localStorage.getItem('token')
+                },
+                data: {
+                    nameApplication: this.nameApplication ,
+                    addressApplication: this.addressApplication ,
+                    birthPlace: this.birthPlace ,
+                    birthDate: this.birthDate ,
+                    contactApplication: this.companyName ,
+                    identityNumber: this.identityNumber ,
+                    companyName: this.companyName ,
+                    companyAddress: this.companyAddress ,
+                    companyContact: this.companyContact ,
+                    province: this.province ,
+                    city: this.city ,
+                    district: this.district ,
+                    village: this.village ,
+                    postalCode: this.postalCode ,
+                    noAktaPendirian: this.noAktaPendirian ,
+                    dateAktaPendirian: this.dateAktaPendirian ,
+                    dateAktaPengesahan: this.dateAktaPengesahan ,
+                    noAktaPerubahan: this.noAktaPerubahan ,
+                    dateAktaPerubahan: this.dateAktaPerubahan ,
+                    dateAktaPengesahanR: this.dateAktaPengesahanR ,
+                    institutional: this.institutional ,
+                    mainBusiness: this.mainBusiness ,
+                    mainService: this.mainService
+                }
+            })
+            .then(response =>{
+                // console.log(`iniresponse`, response);
+                success(`Add data`)
+            })
+            .catch(err =>{
+                error(`failed`)
+            })
+        },
+
+
         doLogout: function(){
             localStorage.removeItem('token')
             this.$store.dispatch('logout')
@@ -407,16 +620,61 @@ export default {
         },
 
         save(){
+            let formPicture = new FormData()
+            formPicture.append('image', this.picture)
+            axios.post(baseUrl+`/api/request/upload`, formPicture,{})
+            .then(response =>{
+                console.log(`iniii response upload`, response);
+                axios({
+                    url:  baseUrl + `/api/request/test`,
+                    method: 'POST',
+                    data: {
+                        name: this.name,
+                        picture: response.data.link
+                    }
+                })
+                .then(res =>{
+                    console.log(res);
+                    console.log(`save`); 
+                })
+            })
+            .catch(err =>{
+                console.log(`inicatach upload`,err);
+            })
+        },
 
-        }
+        formatDate(tgl) {
+            var monthNames = [
+                "January", "February", "March",
+                "April", "May", "June", "July",
+                "August", "September", "October",
+                "November", "December"
+            ];
+            var year = tgl.substring(0, 4)
+            var monthIndex = tgl.substring(5, 6)
+            var day = tgl.substring(8, 10)
+            return day + '-' + monthNames[monthIndex] + '-' + year;
+        },
+
+
+        getImage(link) {
+            this.picture = link.target.files[0]
+        },
+        
+        
     },
 
     computed: {
-        ...mapState(['user', 'token']),
+        ...mapState(['user', 'token', 'myRequest', 'myNewRequest', 'myOnProcces']),
         isLoggedIn : function(){
             return this.$store.getters.isLoggedIn
-        }
-    }
+        },
+    },
+    mounted() {
+        this.$store.dispatch('myRequest'),
+        this.$store.dispatch('newRequest')
+        this.$store.dispatch('onRequest')
+    },
 };
 </script>
 <style>

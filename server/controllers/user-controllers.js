@@ -166,6 +166,7 @@ module.exports = {
 
     getUser: (req, res) =>{
         User.find()
+        .populate('request')
         .then(response =>{
             res.status(200).json(response)
         })
@@ -191,5 +192,7 @@ module.exports = {
             
         })
     },
+
+    
 
 }
