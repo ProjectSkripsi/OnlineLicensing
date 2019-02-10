@@ -343,14 +343,24 @@
                                                     <input type="file" min="0" class="form-control" @change="getImage($event)">
                                                 </div>
                                                 <div class="text-center">
-                                                    <base-button tag="a"
+                                                    <!-- <div class="hidden display-inline align-center" v-show="ktp" v-bind:class="{ 'ktp': true }">
+                                                        <img :src="ktp" alt="" class="preview" /><br>
+                                                        <base-button tag="a"
                                                                 href="#"
-                                                                @click="save"
+                                                                @click="removeFile"
                                                                 class="mb-3 mb-sm-0"
-                                                                type="success"
-                                                            >
-                                                        upload
-                                                    </base-button>
+                                                                type="danger">
+                                                            remove
+                                                        </base-button> -->
+                                                        <base-button tag="a"
+                                                                href="#"
+                                                                @click="saveKTP"
+                                                                class="mb-3 mb-sm-0"
+                                                                type="success">
+                                                            upload
+                                                        </base-button>
+                                                    <!-- </div> -->
+                                                
                                                 </div>
                                             </div>
                                         </tab-pane>
@@ -365,17 +375,27 @@
                                                         <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
                                                     </select><br>
                                                     <p class="description">NPWP Pemohon</p>
-                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                    <input type="file" min="0" class="form-control" @change="getNPWP($event)">
                                                 </div>
                                                 <div class="text-center">
-                                                    <base-button tag="a"
+                                                    <!-- <div class="hidden display-inline align-center" v-show="npwp" v-bind:class="{ 'ktp': true }">
+                                                        <img :src="npwp" alt="" class="preview" /><br>
+                                                        <base-button tag="a"
                                                                 href="#"
-                                                                @click="save"
+                                                                @click="removeFile"
                                                                 class="mb-3 mb-sm-0"
-                                                                type="success"
-                                                            >
-                                                        upload
-                                                    </base-button>
+                                                                type="danger">
+                                                            remove
+                                                        </base-button> -->
+                                                        <base-button tag="a"
+                                                                href="#"
+                                                                @click="saveNPWP"
+                                                                class="mb-3 mb-sm-0"
+                                                                type="success">
+                                                            upload
+                                                        </base-button>
+                                                        
+                                                    <!-- </div> -->
                                                 </div>
                                             </div>
                                         </tab-pane>
@@ -390,12 +410,12 @@
                                                         <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
                                                     </select><br>
                                                     <p class="description">Surat Pernyataan Kedudukan Badan Usaha:</p>
-                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                    <input type="file" min="0" class="form-control" @change="getSpkbu($event)">
                                                 </div>
                                                 <div class="text-center">
                                                     <base-button tag="a"
                                                                 href="#"
-                                                                @click="save"
+                                                                @click="saveSPKBU"
                                                                 class="mb-3 mb-sm-0"
                                                                 type="success"
                                                             >
@@ -415,12 +435,12 @@
                                                         <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
                                                     </select><br>
                                                     <p class="description">Surat Pernyataan belum memiliki SIUP:</p>
-                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                    <input type="file" min="0" class="form-control" @change="getSIUP($event)">
                                                 </div>
                                                 <div class="text-center">
                                                     <base-button tag="a"
                                                                 href="#"
-                                                                @click="save"
+                                                                @click="saveSIUP"
                                                                 class="mb-3 mb-sm-0"
                                                                 type="success"
                                                             >
@@ -440,12 +460,12 @@
                                                         <option v-for="company in myRequest" :key="company._id" :value="company._id"> {{ company.companyName }}</option>
                                                     </select><br>
                                                     <p class="description">Pas Foto:</p>
-                                                    <input type="file" min="0" class="form-control" @change="getImage($event)">
+                                                    <input type="file" min="0" class="form-control" @change="getFoto($event)">
                                                 </div>
                                                 <div class="text-center">
                                                     <base-button tag="a"
                                                                 href="#"
-                                                                @click="save"
+                                                                @click="saveFoto"
                                                                 class="mb-3 mb-sm-0"
                                                                 type="success"
                                                             >
@@ -513,7 +533,7 @@ function success(msg) {
     `)
     setTimeout(() => {
         $("#alert").text("")
-    }, 2000);
+    }, 3000);
 }
 function error(msg) {
     $("#alert").append(`
@@ -521,12 +541,12 @@ function error(msg) {
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <p><h4>Sorry! ${msg} 👎🏻</h4></p>
+            <p>Sorry! ${msg} 👎🏻</p>
         </div>
     `)
     setTimeout(() => {
         $("#alert").text("")
-    }, 2000);
+    }, 3000);
 }
 
 export default {
@@ -537,9 +557,12 @@ export default {
     },
     data() {
         return {
-            picture: '',
+            ktp: '',
             npwp: '',
+            spkbu: '',
+            siup:'',
             name:'',
+            foto:'',
             nameApplication: '',
             addressApplication: '',
             birthPlace: '',
@@ -609,6 +632,9 @@ export default {
                 error(`failed`)
             })
         },
+        removeFile() {
+            this.ktp = '';
+        },
 
 
         doLogout: function(){
@@ -619,29 +645,116 @@ export default {
             })
         },
 
-        save(){
+        saveKTP(){
             let formPicture = new FormData()
-            formPicture.append('image', this.picture)
+            formPicture.append('image', this.ktp)
             axios.post(baseUrl+`/api/request/upload`, formPicture,{})
             .then(response =>{
-                console.log(`iniii response upload`, response);
                 axios({
-                    url:  baseUrl + `/api/request/test`,
-                    method: 'POST',
+                    url:  baseUrl + `/api/request/ktp/${this.myCompany}`,
+                    method: 'PATCH',
                     data: {
-                        name: this.name,
-                        picture: response.data.link
-                    }
+                        ktp: response.data.link
+                    },
                 })
                 .then(res =>{
-                    console.log(res);
-                    console.log(`save`); 
+                    success(`uploaded KTP`)
                 })
             })
             .catch(err =>{
-                console.log(`inicatach upload`,err);
+                error(`error upload! Please try again`);
             })
         },
+
+        saveNPWP(){
+            let formPicture = new FormData()
+            formPicture.append('image', this.npwp)
+            axios.post(baseUrl+`/api/request/upload`, formPicture,{})
+            .then(response =>{
+                console.log(response);
+                
+                axios({
+                    url:  baseUrl + `/api/request/npwp/${this.myCompany}`,
+                    method: 'PATCH',
+                    data: {
+                        npwp: response.data.link
+                    },
+                })
+                .then(res =>{
+                    success(`uploaded NPWP`)
+                })
+            })
+            .catch(err =>{
+                error(`error upload! Please try again`);
+            })
+        },
+
+        saveSPKBU(){
+            let formPicture = new FormData()
+            formPicture.append('image', this.spkbu)
+            axios.post(baseUrl+`/api/request/upload`, formPicture,{})
+            .then(response =>{
+                console.log(response);
+                axios({
+                    url:  baseUrl + `/api/request/spkbu/${this.myCompany}`,
+                    method: 'PATCH',
+                    data: {
+                        spkbu: response.data.link
+                    },
+                })
+                .then(res =>{
+                    success(`uploaded Surat Pernyataan Kedudukan Badan Usaha`)
+                })
+            })
+            .catch(err =>{
+                error(`error upload! Please try again`);
+            })
+        },
+
+        saveSIUP(){
+            let formPicture = new FormData()
+            formPicture.append('image', this.siup)
+            axios.post(baseUrl+`/api/request/upload`, formPicture,{})
+            .then(response =>{
+                console.log(response);
+                axios({
+                    url:  baseUrl + `/api/request/siup/${this.myCompany}`,
+                    method: 'PATCH',
+                    data: {
+                        siup: response.data.link
+                    },
+                })
+                .then(res =>{
+                    success(`uploaded Surat Pernyataan belum memiliki SIUP`)
+                })
+            })
+            .catch(err =>{
+                error(`error upload! Please try again`);
+            })
+        },
+
+        saveFoto(){
+            let formPicture = new FormData()
+            formPicture.append('image', this.foto)
+            axios.post(baseUrl+`/api/request/upload`, formPicture,{})
+            .then(response =>{
+                console.log(response);
+                axios({
+                    url:  baseUrl + `/api/request/foto/${this.myCompany}`,
+                    method: 'PATCH',
+                    data: {
+                        foto: response.data.link
+                    },
+                })
+                .then(res =>{
+                    success(`uploaded Pas Foto`)
+                })
+            })
+            .catch(err =>{
+                error(`error upload! Please try again`);
+            })
+        },
+
 
         formatDate(tgl) {
             var monthNames = [
@@ -656,9 +769,32 @@ export default {
             return day + '-' + monthNames[monthIndex] + '-' + year;
         },
 
+        getNPWP(link) {
+            this.npwp = link.target.files[0]
+        },
+
+        getSIUP(link) {
+            this.siup = link.target.files[0]
+        },
+
+        getSpkbu(link) {
+            this.spkbu = link.target.files[0]
+        },
+
+        getFoto(link) {
+            this.foto = link.target.files[0]
+        },
 
         getImage(link) {
-            this.picture = link.target.files[0]
+            let input = link.target
+            this.ktp = link.target.files[0]
+            // if(input.files && input.files[0]){
+            //     let reader = new FileReader();
+            //     reader.onload = (e) =>{
+            //         this.ktp = e.target.result
+            //     }
+            //     reader.readAsDataURL(input.files[0])
+            // }
         },
         
         
@@ -678,4 +814,16 @@ export default {
 };
 </script>
 <style>
+.file-upload-form, .image-preview {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    padding: 20px;
+}
+img.preview {
+    width: 300px;
+    background-color: white;
+    border: 1px solid #DDD;
+    padding: 5px;
+}
+
+
 </style>

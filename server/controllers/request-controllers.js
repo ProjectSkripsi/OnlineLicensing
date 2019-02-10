@@ -110,7 +110,74 @@ module.exports = {
     },
 
     addKtp: (req, res) =>{
-        
-    }
+        console.log(req.body);
+        Request.findByIdAndUpdate({
+            _id: req.params.id,
+        },{
+            ktp: req.body.ktp
+        })
+        .then(response =>{
+            res.status(201).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    addNPWP: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id,
+        },{
+            npwp: req.body.npwp
+        })
+        .then(response =>{
+            res.status(201).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    addSpkbu: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id,
+        },{
+            spkbu: req.body.spkbu
+        })
+        .then(response =>{
+            res.status(201).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    addSIUP: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id,
+        },{
+            siup: req.body.siup
+        })
+        .then(response =>{
+            res.status(201).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    addFoto: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id,
+        },{
+            foto: req.body.foto
+        })
+        .then(response =>{
+            res.status(201).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
 
 }
