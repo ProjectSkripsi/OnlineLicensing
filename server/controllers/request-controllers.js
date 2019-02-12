@@ -4,7 +4,6 @@ const Test = require('../models/Test')
 module.exports = {
     addRequest: (req, res) =>{
         console.log(req.decoded.id);
-        
         Request.create({
             nameApplication: req.body.nameApplication,
             userId: req.decoded.id,
@@ -29,6 +28,7 @@ module.exports = {
             dateAktaPengesahan: req.body.dateAktaPengesahan,
             institutional: req.body.institutional,
             mainBusiness: req.body.mainBusiness,
+            mainService: req.body.mainService
         })
         .then(response =>{
             console.log(`iniiii responcon`);
@@ -174,6 +174,96 @@ module.exports = {
         })
         .then(response =>{
             res.status(201).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    allOnProcces: (req, res) =>{
+        Request.find({
+            statusApplication: 'On Procces'
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    deleteRequest: (req, res) =>{
+        Request.deleteOne({
+            _id: req.params.id
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    editRequest:(req, res) =>{
+        console.log(`from client`,req.body);
+        console.log(req.params.id);
+        
+        Request.updateOne({
+            _id: req.params.id,
+        },{
+            nameApplication: req.body.nameApplication,
+            addressApplication: req.body.addressApplication,
+            birthPlace: req.body.birthPlace,
+            birthDate: req.body.birthDate,
+            contactApplication: req.body.contactApplication,
+            identityNumber: req.body.identityNumber,
+            companyName: req.body.companyName,
+            companyAddress: req.body.companyAddress,
+            companyContact: req.body.companyContact,
+            province: req.body.province,
+            city: req.body.city,
+            district: req.body.district,
+            village: req.body.village,
+            postalCode: req.body.postalCode,
+            noAktaPendirian: req.body.noAktaPendirian,
+            dateAktaPendirian: req.body.dateAktaPendirian,
+            dateAktaPengesahan: req.body.dateAktaPengesahan,
+            noAktaPerubahan: req.body.noAktaPerubahan,
+            dateAktaPerubahan: req.body.dateAktaPerubahan,
+            dateAktaPengesahan: req.body.dateAktaPengesahan,
+            institutional: req.body.institutional,
+            mainBusiness: req.body.mainBusiness,
+            mainService: req.body.mainService
+        })
+        .then(response =>{
+            res.status(201).json(response)
+        })
+        .catch(err =>{
+            console.log(`server`, err);
+            
+            res.status(500).json(err)
+        })
+    },
+
+    allDone: (req, res) =>{
+        Request.find({
+            statusApplication: 'Selesai'
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    MyDoneRequest: (req, res) =>{
+        Request.find({
+            userId: req.decoded.id,
+            statusApplication: 'Selesai'
+        })
+        .then(response =>{
+            res.status(200).json(response)
         })
         .catch(err =>{
             res.status(500).json(err)

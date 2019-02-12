@@ -48,7 +48,7 @@
                                 <card class="border-0 text-center" hover shadow body-classes="py-5">
                                     <img src="img/icons/izin-proses-icon.png" height="100px">
                                     <h6 class="text-primary text-uppercase">Izin Selesai</h6>
-                                    <p class="description mt-3"><b> 57371</b></p>
+                                    <p class="description mt-3"><b> {{ allDoneRequest.length }}</b></p>
                                     
                                 </card>
                             </div>
@@ -56,14 +56,14 @@
                                 <card class="border-0 text-center" hover shadow body-classes="py-5">
                                     <img src="img/icons/izin-dalam-proses.png" height="100px">
                                     <h6 class="text-success text-uppercase">Izin dalam proses</h6>
-                                    <p class="description mt-3">18929</p>
+                                    <p class="description mt-3">{{ allProcces.length }}</p>
                                 </card>
                             </div>
                             <div class="col-lg-4">
                                 <card class="border-0 text-center" hover shadow body-classes="py-5">
                                     <img src="img/icons/total-pengguna-icon.png" height="100px">
                                     <h6 class="text-warning text-uppercase">Total Pengguna</h6>
-                                    <p class="description mt-3">50870</p>
+                                    <p class="description mt-3">{{ allUser.length }}</p>
                                 </card>
                             </div>
                         </div>
@@ -71,46 +71,10 @@
                 </div>
             </div>
         </section>
-        <panduan/>
-        <!-- <section class="section section-lg">
-            <div class="container">
-                <div class="row row-grid align-items-center">
-                    <div class="col-md-6 order-md-2">
-                        <img src="img/theme/promo-1.png" class="img-fluid floating">
-                    </div>
-                    <div class="col-md-6 order-md-1">
-                        <div class="pr-md-5">
-                            <icon name="ni ni-settings-gear-65" class="mb-5" size="lg" type="success" shadow
-                                  rounded></icon>
-                            <h3>Awesome features</h3>
-                            <p>The kit comes with three pre-built pages to help you get started faster. You can change
-                                the text and images and you're good to go.</p>
-                            <ul class="list-unstyled mt-5">
-                                <li class="py-2">
-                                    <div class="d-flex align-items-center">
-                                        <badge type="success" circle class="mr-3" icon="ni ni-settings-gear-65"></badge>
-                                        <h6 class="mb-0">Carefully crafted components</h6>
-                                    </div>
-                                </li>
-                                <li class="py-2">
-                                    <div class="d-flex align-items-center">
-                                        <badge type="success" circle class="mr-3" icon="ni ni-html5"></badge>
-                                        <h6 class="mb-0">Amazing page examples</h6>
-                                    </div>
-                                </li>
-                                <li class="py-2">
-                                    <div class="d-flex align-items-center">
-                                        <badge type="success" circle class="mr-3" icon="ni ni-satisfied"></badge>
-                                        <h6 class="mb-0">Super friendly support team</h6>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-
+        <section class="section bg-secondary">
+            <panduan/>
+        </section>
+    
         <!-- <section class="section bg-secondary">
             <div class="container">
                 <div class="row row-grid align-items-center">
@@ -465,11 +429,21 @@
 </template>
 
 <script>
+import {mapActions, mapState} from 'vuex'
 import panduan from "./components/JavascriptComponents";
 export default {
-  name: "home",
-  components: {
-    panduan
-  }
+    name: "home",
+    components: {
+        panduan
+    },
+    computed: {
+        ...mapState(['allUser', 'allProcces', 'allDoneRequest'])
+    },
+    mounted() {
+        this.$store.dispatch('getAllUser')
+        this.$store.dispatch('allOnProcces')
+        this.$store.dispatch('getAllDone')
+    },
+
 };
 </script>

@@ -2,7 +2,8 @@ const express = require('express')
 const router = express.Router()
 const upload = require('../helpers/picture')
 const {isLogin} = require('../middlewares/auth')
-const {addRequest, test, getRequest, myRequest, newRequest, addKtp, onRequest, addNPWP, addSpkbu, addSIUP, addFoto} = require('../controllers/request-controllers')
+const {addRequest, test, getRequest, myRequest, newRequest, addKtp, editRequest, allDone, MyDoneRequest,
+    onRequest, addNPWP, addSpkbu, addSIUP, addFoto, allOnProcces, deleteRequest} = require('../controllers/request-controllers')
 
 router.post('/', isLogin, addRequest)
 router.get('/getRequest', getRequest)
@@ -14,6 +15,11 @@ router.patch('/npwp/:id', addNPWP)
 router.patch('/spkbu/:id', addSpkbu)
 router.patch('/siup/:id', addSIUP)
 router.patch('/foto/:id', addFoto)
+router.get('/allOnProcces', allOnProcces)
+router.delete('/:id', deleteRequest),
+router.put('/:id', editRequest)
+router.get('/allDone', allDone)
+router.get('/MyDoneRequest', isLogin, MyDoneRequest)
 
 
 router.post('/upload',
@@ -26,7 +32,6 @@ router.post('/upload',
         link: req.file.cloudStoragePublicUrl
     })
 })
-router.post('/test', upload.multer.single('image'), upload.sendUploadToGCS, test)
 
 
 module.exports = router

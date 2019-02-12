@@ -4,6 +4,7 @@ import axios from 'axios'
 import swal from 'sweetalert';
 import Notify from 'vue-notify-me'
 import router from 'vue-router'
+import { stat } from 'fs';
 const baseUrl = `http://localhost:3000`
 
 
@@ -17,6 +18,10 @@ export default new Vuex.Store({
 		myRequest: [],
 		myNewRequest: [],
 		myOnProcces: [],
+		allUser: [],
+		allProcces: [],
+		allDoneRequest: [],
+		myRequestDone: []
 
     },
 
@@ -46,7 +51,20 @@ export default new Vuex.Store({
 		},
 		on_procces(state, onProc){
 			state.myOnProcces = onProc
+		},
+		list_user(state, users){
+			state.allUser = users
+		},
+		allOn_procces(state, data){
+			state.allProcces = data
+		},
+		list_done(state, done){
+			state.allDoneRequest = done
+		},
+		all_done(state, myDone){
+			state.myRequestDone = myDone
 		}
+
     },
 
     actions: {
@@ -187,6 +205,65 @@ export default new Vuex.Store({
 			.then(response =>{
 				let onProc = response.data
 				commit(`on_procces`, onProc)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		getAllUser({commit}, payload){
+			axios({
+				url: baseUrl + `/api/users`,
+				method: `GET`,
+			})
+			.then(response =>{
+				let users = response.data
+				commit ('list_user', users)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		allOnProcces({commit}, payload){
+			axios({
+				url: baseUrl + `/api/request/allOnProcces`,
+				method: `GET`
+			})
+			.then(response =>{
+				let data = response.data
+				commit(`allOn_procces`, data)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		getAllDone({commit}, payload){
+			axios({
+				url: baseUrl+`/api/request/allDone`,
+				method: `GET`
+			})
+			.then(response =>{
+				let done = response.data
+				commit('list_done', done)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		MyDoneRequest({commit}, payload){
+			axios({
+				url: baseUrl + `/api/request/MyDoneRequest`,
+				method: `GET`,
+				headers: {
+					token: localStorage.getItem('token')
+				}
+			})
+			.then(response=>{
+				let myDone = response.data
+				commit('all_done', myDone)
 			})
 			.catch(err =>{
 				console.log(err);
