@@ -31,8 +31,6 @@ module.exports = {
             mainService: req.body.mainService
         })
         .then(response =>{
-            console.log(`iniiii responcon`);
-            
             res.status(201).json({
                 msg: `Succesfully created`,
                 data: response
@@ -62,6 +60,7 @@ module.exports = {
     getRequest: (req, res) =>{
         Request.find({})
         .populate('userId')
+        .sort([['updatedAt', 'descending']])
         .then(response =>{
             res.status(200).json(response)
         })
@@ -86,7 +85,7 @@ module.exports = {
     newRequest: (req, res) =>{
         Request.find({
             userId: req.decoded.id,
-            statusApplication: 'new'
+            statusApplication: 'Baru'
         })
         .then(response =>{
             res.status(200).json(response)
@@ -99,7 +98,7 @@ module.exports = {
     onRequest: (req, res) =>{
         Request.find({
             userId: req.decoded.id,
-            statusApplication: 'On Procces'
+            statusApplication: 'Proses'
         })
         .then(response =>{
             res.status(200).json(response)
@@ -180,9 +179,23 @@ module.exports = {
         })
     },
 
+    addAkta: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id,
+        },{
+            akta: req.body.akta
+        })
+        .then(response =>{
+            res.status(201).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
     allOnProcces: (req, res) =>{
         Request.find({
-            statusApplication: 'On Procces'
+            statusApplication: 'Proses'
         })
         .then(response =>{
             res.status(200).json(response)
@@ -205,9 +218,6 @@ module.exports = {
     },
 
     editRequest:(req, res) =>{
-        console.log(`from client`,req.body);
-        console.log(req.params.id);
-        
         Request.updateOne({
             _id: req.params.id,
         },{
@@ -233,7 +243,8 @@ module.exports = {
             dateAktaPengesahan: req.body.dateAktaPengesahan,
             institutional: req.body.institutional,
             mainBusiness: req.body.mainBusiness,
-            mainService: req.body.mainService
+            mainService: req.body.mainService,
+            statusApplication: 'Baru'
         })
         .then(response =>{
             res.status(201).json(response)
@@ -269,5 +280,55 @@ module.exports = {
             res.status(500).json(err)
         })
     },
+
+    allNewRequest: (req, res)=>{
+        Request.find({
+            statusApplication: 'Baru'
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    myIncorrect: (req, res)=>{
+        Request.find({
+            userId: req.decoded.id,
+            statusApplication: 'Butuh Perbaikan'
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    myReject: (req, res)=>{
+        Request.find({
+            userId: req.decoded.id,
+            statusApplication: 'Di Tolak'
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    allIncorrect:(req, res) =>{
+        Request.find({
+            statusApplication: 'Butuh Perbaikan'
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    }
 
 }

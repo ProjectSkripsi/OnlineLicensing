@@ -1,4 +1,5 @@
 import Vue from "vue";
+import Notifications from 'vue-notification'
 import App from "./App.vue";
 import router from "./router";
 import store from './store'
@@ -8,7 +9,7 @@ import VueCollapse from 'vue2-collapse'
 import Axios from 'axios'
 Vue.use(VueCollapse)
 
-
+Vue.use(Notifications)
 
 Vue.use(VueScrollTo, {
   container: "body",

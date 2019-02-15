@@ -75,6 +75,7 @@ module.exports = {
                             msg: `Succesfully Login`,
                             email: user.email,
                             name: user.name,
+                            role: user.role,
                             token: hash.jwtEncode({
                                 id: user._id,
                                 name: user.name,

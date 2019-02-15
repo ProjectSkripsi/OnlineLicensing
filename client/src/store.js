@@ -21,8 +21,13 @@ export default new Vuex.Store({
 		allUser: [],
 		allProcces: [],
 		allDoneRequest: [],
-		myRequestDone: []
-
+		myRequestDone: [],
+		role: '',
+		allRequest: [],
+		allNewReq: [],
+		myIncorrect: [],
+		allMyReject: [],
+		allIncorrects: []
     },
 
     mutations: {
@@ -63,8 +68,22 @@ export default new Vuex.Store({
 		},
 		all_done(state, myDone){
 			state.myRequestDone = myDone
+		},
+		list_request(state, request){
+			state.allRequest = request
+		},
+		all_new(state, newReq){
+			state.allNewReq = newReq
+		},
+		my_incorrect(state, incorrect){
+			state.myIncorrect = incorrect
+		},
+		my_reject(state, reject){
+			state.allMyReject = reject
+		},
+		all_incorrect(state, alIncorrect){
+			state.allIncorrects = alIncorrect
 		}
-
     },
 
     actions: {
@@ -268,7 +287,84 @@ export default new Vuex.Store({
 			.catch(err =>{
 				console.log(err);
 			})
+		},
+
+		myIncorrect({commit}, payload){
+			axios({
+				url: baseUrl + `/api/request/myIncorrect`,
+				method: `GET`,
+				headers: {
+					token: localStorage.getItem('token')
+				}
+			})
+			.then(response =>{
+				let incorrect = response.data
+				commit('my_incorrect', incorrect)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		myReject({commit}, payload){
+			axios({
+				url: baseUrl+ `/api/request/myReject`,
+				method: `GET`,
+				headers: {
+					token: localStorage.getItem('token')
+				}
+			})
+			.then(response =>{
+				let reject = response.data
+				commit('my_reject', reject)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		getAllRequest({commit}, payload){
+			axios({
+				url: baseUrl +`/api/request/getRequest`,
+				method: `GET`,
+			})
+			.then(response =>{
+				let request = response.data
+				commit('list_request', request)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		allNewRequest({commit}, payload){
+			axios({
+				url: baseUrl +`/api/request/allNewRequest`,
+				method: `GET`,
+			})
+			.then(response =>{
+				let newReq = response.data
+				commit('all_new', newReq)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
+		},
+
+		allIncorrect({commit}, payload){
+			axios({
+				url: baseUrl+ `/api/request/allIncorrect`,
+				method: `GET`,
+			})
+			.then(response =>{
+				let alIncorrect = response.data
+				commit('all_incorrect', alIncorrect)
+			})
+			.catch(err =>{
+				console.log(err);
+			})
 		}
+
 	},
 	getters : {
 		isLoggedIn: state => !!state.token,

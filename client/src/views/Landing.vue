@@ -21,7 +21,7 @@
                                 <h1 class="display-3  text-white">E-SIUP
                                     <span>Pemkot Makassar</span>
                                 </h1>
-                                <p class="lead  text-white">adalah aplikasi perizinan online dari DPMPTSP Pemkot Makassar. Kini, hanya dengan 3 langkah mudah permohonan izin SIUP &amp; TDP Anda bisa diajukan</p>
+                                <p class="lead  text-white">adalah aplikasi perizinan online dari DPMPTSP Pemkot Makassar. Kini, hanya dengan 3 langkah mudah permohonan izin SIUP &amp; SITU Anda bisa diajukan</p>
                                 <div class="btn-wrapper">
                                     <base-button tag="a"
                                                  href="#"
@@ -443,6 +443,7 @@ export default {
         this.$store.dispatch('getAllUser')
         this.$store.dispatch('allOnProcces')
         this.$store.dispatch('getAllDone')
+        
     },
 
 };

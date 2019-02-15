@@ -34,9 +34,10 @@ const requestSchema = new Schema({
     siup: String,
     spkbu: String,
     foto: String,
+    akta: String,
     statusApplication: {
         type: String,
-        default: 'new'
+        default: 'Baru'
     },
     deleteAt: {
         type: Date,

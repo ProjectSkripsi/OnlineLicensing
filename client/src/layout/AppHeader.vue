@@ -44,15 +44,7 @@
                     </a>
                     <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
                     <router-link to="/profile" class="dropdown-item">Profile</router-link>
-                    <router-link @click="doLogout" to="/"  class="dropdown-item">Logout</router-link>
-                    <router-link to="/"><base-button tag="a"
-                                href="#"
-                                @click="doLogout"
-                                class="mb-3 mb-sm-0"
-                                type="info"
-                               >
-                        logout
-                    </base-button></router-link>
+                    <a href="#"  @click.prevent="doLogout"><router-link to="/" class="dropdown-item">  Logout </router-link></a>
                 </base-dropdown>
             </ul>
         </base-nav>

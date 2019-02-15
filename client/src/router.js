@@ -33,7 +33,8 @@ let router = new Router({
         default: Landing,
         footer: AppFooter
       },
-    },{
+    },
+    {
       path: '/dashboard',
       name: 'Dashboard',
       components: {
@@ -45,7 +46,7 @@ let router = new Router({
       path: "/confirmation",
       name: "confirmation",
       components: {
-        header: AppHeader,
+        // header: AppHeader,
         default: Confirmation,
         footer: AppFooter
       }
@@ -63,7 +64,7 @@ let router = new Router({
       path: "/register",
       name: "register",
       components: {
-        header: AppHeader,
+        // header: AppHeader,
         default: Register,
         footer: AppFooter
       }
