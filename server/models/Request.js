@@ -35,6 +35,7 @@ const requestSchema = new Schema({
     spkbu: String,
     foto: String,
     akta: String,
+    keterangan: String,
     statusApplication: {
         type: String,
         default: 'Baru'

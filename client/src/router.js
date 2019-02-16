@@ -9,6 +9,7 @@ import Confirmation from "./views/Confirmation.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import Dashboard from "./views/Dasboard.vue";
+import Letter from "./views/Letter.vue";
 Vue.use(Router);
 
 let router = new Router({
@@ -40,7 +41,13 @@ let router = new Router({
       components: {
         default: Dashboard,
         footer: AppFooter
-      }
+      },
+      // children:[{
+      //   name: 'letter',
+      //   path: '/:id',
+      //   props: true,
+      //   components: () => import('./views/Letter.vue')
+      // }]
     },
     {
       path: "/confirmation",

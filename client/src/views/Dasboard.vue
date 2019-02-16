@@ -65,6 +65,7 @@
      </header>
       <!-- navmember -->
     <admin v-show="user.role === 'admin'" />
+    <!-- <<router-view v-show="user.role === 'admin'"/> -->
     <div class="member" v-show="user.role === 'member'">
         <section class="section section-components mt-5" id="dashboard">
             <div class="container">

@@ -7,6 +7,10 @@ import Argon from "./plugins/argon-kit";
 import VueScrollTo from 'vue-scrollto';
 import VueCollapse from 'vue2-collapse'
 import Axios from 'axios'
+import {ServerTable, ClientTable, Event} from 'vue-tables-2';
+Vue.use(ClientTable);
+Vue.use(ServerTable);
+
 Vue.use(VueCollapse)
 
 Vue.use(Notifications)
