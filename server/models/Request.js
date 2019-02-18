@@ -36,6 +36,7 @@ const requestSchema = new Schema({
     foto: String,
     akta: String,
     keterangan: String,
+    note: String,
     statusApplication: {
         type: String,
         default: 'Baru'

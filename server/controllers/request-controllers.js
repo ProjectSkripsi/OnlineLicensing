@@ -25,7 +25,7 @@ module.exports = {
             dateAktaPengesahan: req.body.dateAktaPengesahan,
             noAktaPerubahan: req.body.noAktaPerubahan,
             dateAktaPerubahan: req.body.dateAktaPerubahan,
-            dateAktaPengesahan: req.body.dateAktaPengesahan,
+            dateAktaPengesahanR: req.body.dateAktaPengesahanR,
             institutional: req.body.institutional,
             mainBusiness: req.body.mainBusiness,
             mainService: req.body.mainService
@@ -322,6 +322,18 @@ module.exports = {
     allIncorrect:(req, res) =>{
         Request.find({
             statusApplication: 'Butuh Perbaikan'
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    getOneReq: (req, res) =>{
+        Request.findById({
+            _id: req.params.id
         })
         .then(response =>{
             res.status(200).json(response)

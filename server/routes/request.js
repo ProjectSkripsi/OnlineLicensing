@@ -3,7 +3,7 @@ const router = express.Router()
 const upload = require('../helpers/picture')
 const {isLogin} = require('../middlewares/auth')
 const {addRequest, test, getRequest, myRequest, newRequest, addKtp, editRequest, allDone, MyDoneRequest,allNewRequest, myIncorrect, myReject, allIncorrect, addAkta,
-    onRequest, addNPWP, addSpkbu, addSIUP, addFoto, allOnProcces, deleteRequest} = require('../controllers/request-controllers')
+    onRequest, addNPWP, addSpkbu, addSIUP, addFoto, allOnProcces, deleteRequest, getOneReq} = require('../controllers/request-controllers')
 
 router.post('/', isLogin, addRequest)
 router.get('/getRequest', getRequest)
@@ -25,6 +25,7 @@ router.get('/allNewRequest', allNewRequest)
 router.get('/myIncorrect', isLogin, myIncorrect)
 router.get('/myReject', isLogin, myReject)
 router.get('/allIncorrect', allIncorrect)
+router.get('/:id', getOneReq)
 
 
 router.post('/upload',

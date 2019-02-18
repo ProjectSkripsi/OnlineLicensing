@@ -42,12 +42,6 @@ let router = new Router({
         default: Dashboard,
         footer: AppFooter
       },
-      // children:[{
-      //   name: 'letter',
-      //   path: '/:id',
-      //   props: true,
-      //   components: () => import('./views/Letter.vue')
-      // }]
     },
     {
       path: "/confirmation",
@@ -84,8 +78,16 @@ let router = new Router({
         default: Profile,
         footer: AppFooter
       }
+    },
+    {
+      path: '/:id',
+      name: 'letter',
+      component: () => import('./views/Letter')
     }
   ],
+
+
+
   scrollBehavior: to => {
     if (to.hash) {
       return { selector: to.hash };

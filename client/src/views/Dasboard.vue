@@ -1,40 +1,8 @@
 <template>
 <div class="dashboard">
-    <!-- navadmin -->
-    <div class="admin" v-show="user.role === 'admin'">
-        <header class="header-global mb-5">
-            <base-nav class="navbar-main" transparent type="primary" effect="transparent" expand>
-                <a slot="brand" class="navbar-brand mr-lg-5" href="/">
-                    <img src="img/brand/white.png">
-                </a>
-
-                <div class="row" slot="content-header" slot-scope="{closeMenu}">
-                    <div class="col-6 collapse-brand">
-                        <a href="#">
-                            <img src="img/brand/blue.png">
-                        </a>
-                    </div>
-                    <div class="col-6 collapse-close">
-                        <close-button @click="closeMenu"></close-button>
-                    </div>
-                </div>
-                <ul class="navbar-nav navbar-nav-hover ml-lg-auto" >
-                    <base-dropdown tag="li" class="nav-item">
-                        <a slot="title" href="#" class="nav-link" data-toggle="dropdown" role="button">
-                            <i class="ni ni-collection d-lg-none"></i>
-                            <span class="nav-link-inner--text">{{ user.name }}</span>
-                        </a>
-                        <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
-                        <router-link to="/profile" class="dropdown-item">Profile</router-link>
-                        <a href="#"  @click.prevent="doLogout"><router-link to="/" class="dropdown-item">  Logout </router-link></a>
-                    </base-dropdown>
-                </ul>
-            </base-nav>
-        </header>
-    </div>
-
+    
     <!-- nav-member -->
-     <header class="header-global mb-5" v-show="user.role === 'member'">
+     <header class="header-global mb-5">
         <base-nav class="navbar-main" transparent type="primary" effect="transparent" expand>
             <a slot="brand" class="navbar-brand mr-lg-5" href="/">
                 <img src="img/brand/white.png">
@@ -724,7 +692,6 @@
 </template>
 
 <script>
-
 import BaseNav from "@/components/BaseNav";
 import Admin from "./components/Admin.vue"
 import CloseButton from "@/components/CloseButton";
@@ -745,7 +712,6 @@ export default {
         BaseNav,
         CloseButton,
         Admin,
-        
     },
     data() {
         return {
