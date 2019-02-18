@@ -341,6 +341,69 @@ module.exports = {
         .catch(err =>{
             res.status(500).json(err)
         })
+    },
+
+    rejectRequest: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id
+        },{
+            note: req.body.note,
+            statusApplication: 'Di Tolak'
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    doneRequest: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id
+        },{
+            noSeri: req.body.noSeri,
+            noReg: req.body.noReg,
+            statusApplication: 'Selesai',
+            note: req.body.note
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    proccesRequest: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id
+        },{
+            statusApplication: 'Proses',
+            note: req.body.note
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
+    },
+
+    repairRequest: (req, res) =>{
+        Request.findByIdAndUpdate({
+            _id: req.params.id
+        },{
+            statusApplication: 'Butuh Perbaikan',
+            note: req.body.note
+        })
+        .then(response =>{
+            res.status(200).json(response)
+        })
+        .catch(err =>{
+            res.status(500).json(err)
+        })
     }
+
 
 }

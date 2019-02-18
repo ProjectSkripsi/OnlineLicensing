@@ -37,6 +37,8 @@ const requestSchema = new Schema({
     akta: String,
     keterangan: String,
     note: String,
+    noSeri: String,
+    noReg: String,
     statusApplication: {
         type: String,
         default: 'Baru'

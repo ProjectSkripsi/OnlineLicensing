@@ -461,11 +461,11 @@
                                     <table class="table table-hover description">
                                         <thead>
                                             <tr>
-                                                <th>ID. Permohonan</th>
                                                 <th>Pemohon</th>
                                                 <th>Nama Perusahaan</th>
                                                 <th>Tanggal</th>
                                                 <th>Status</th>
+                                                <th>Note</th>
                                                 <th>Tindakan</th>
                                             </tr>
                                         </thead>
@@ -474,11 +474,11 @@
                                                 <td class="text-center" colspan="6">No data avaible</td>
                                             </tr>
                                             <tr v-else v-for="data in myRequest" :key="data._id">
-                                                <td>{{ data._id}} </td>
                                                 <td>{{ data.nameApplication }} </td>
                                                 <td>{{ data.companyName }}</td>
                                                 <td>{{ formatDate(data.createdAt) }}</td>
                                                 <td>{{ data.statusApplication }}</td>
+                                                <td>{{ data.note }}</td>
                                                 <td class="text-center"> 
                                                     <a href="" @click.prevent="editRequest(data)" v-show="data.statusApplication === 'Butuh Perbaikan'"> <i class="fa fa-pencil-square-o"></i></a>
                                                     &nbsp; <a href="" @click.prevent="deleteRequest(data._id)" v-show="data.statusApplication !== 'Selesai'"><i class="fa fa-trash" aria-hidden="true"></i></a>

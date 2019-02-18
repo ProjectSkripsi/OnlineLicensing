@@ -73,38 +73,50 @@
                             </template>
                             <div id="tabel" v-cloak>
                                 <v-client-table :columns="columns" :data="allRequest" :options="options">
-                                    <template slot="Tindakan" slot-scope="props">
-                                        <a @click.prevent="view(props.row)" href="" class="fa fa-eye"></a> &nbsp; 
-                                        <router-link :to="{ name: 'letter', params: { id: props.row._id }}"> <i class="fa fa-file-pdf-o"></i> </router-link>&nbsp;
-                                        <a @click.prevent="print(props.row)" href="" class="fa fa-envelope-open-o"></a>
+                                    <template slot="Tindakan" slot-scope="props" class="text-center">
+                                        <a @click.prevent="view(props.row)" href="" class="fa fa-eye"></a> &nbsp;
+                                        <a @click.prevent="del(props.row._id)" href="" class="fa fa-trash-o"></a>&nbsp;
+                                        <router-link v-show="props.row.statusApplication !== 'Di Tolak'" :to="{ name: 'letter', params: { id: props.row._id }}"> <i class="fa fa-file-pdf-o"></i> </router-link>&nbsp;
                                     </template>
                                     <div slot="child_row" slot-scope="props">
                                         <div class="row">
                                             <div class="col-md-7">
                                                 <h5>Kelengkapan Aplikasi {{ props.row.companyName }}</h5>
                                             </div>
-                                            <div class="col-md-5 text-right">
+                                            <div class="col-md-5 text-right" v-show="props.row.statusApplication !== 'Di Tolak'">
                                                <base-button tag="a"
                                                     href="#"
-                                                    @click.prevent=""
+                                                    @click.prevent="toProcces(props.row)"
                                                     class="mb-3 mb-sm-0"
-                                                    type="success"
+                                                    type="success" 
+                                                    v-show="props.row.statusApplication !== 'Proses' && props.row.statusApplication !== 'Selesai'"
                                                 >
                                                 Proses
                                                 </base-button>
                                                 <base-button tag="a"
                                                     href="#"
-                                                    @click.prevent=""
+                                                    @click.prevent="toRepair(props.row)"
                                                     class="mb-3 mb-sm-0"
                                                     type="warning"
+                                                    v-show="props.row.statusApplication !== 'Proses' && props.row.statusApplication !== 'Selesai'"
                                                 >
                                                 Perbaikan
                                                 </base-button>
                                                 <base-button tag="a"
                                                     href="#"
-                                                    @click.prevent=""
+                                                    @click.prevent="toDone(props.row)"
+                                                    class="mb-3 mb-sm-0"
+                                                    type="primary"
+                                                    v-show="props.row.statusApplication === 'Proses'"
+                                                >
+                                                Selesai
+                                                </base-button>
+                                                <base-button tag="a"
+                                                    href="#"
+                                                    @click.prevent="toReject(props.row)"
                                                     class="mb-3 mb-sm-0"
                                                     type="danger"
+                                                    v-show="props.row.statusApplication !== 'Proses' && props.row.statusApplication !== 'Selesai'"
                                                 >
                                                 Tolak
                                                 </base-button>
@@ -116,43 +128,43 @@
                                                     <template slot="title">
                                                         <small class="text-uppercase"><i class="fa fa-id-card-o" aria-hidden="true"></i>&nbsp; KTP</small>
                                                     </template>
-                                                        <img :src="props.row.ktp" class="img-fluid center" alt="KTP">
-                                                        
+                                                        <img :src="props.row.ktp" class="img-fluid center">
+                                                        <img v-show="!props.row.ktp" src="/img/brand/noimage.png" class="center"> 
                                                 </tab-pane>
                                                 <tab-pane key="tab8">
                                                     <template slot="title">
                                                         <small class="text-uppercase"><i class="fa fa-credit-card-alt" aria-hidden="true"></i>&nbsp; NPWP</small>
                                                     </template>
-                                                        <img :src="props.row.npwp" class="img-fluid center" alt="NPWP">
-                                                        
+                                                        <img v-show="!props.row.npwp" src="/img/brand/noimage.png" class="center">
+                                                        <img :src="props.row.npwp" class="img-fluid center">   
                                                 </tab-pane>
                                                 <tab-pane key="tab7">
                                                     <template slot="title">
                                                         <small class="text-uppercase"><i class="fa fa-gavel" aria-hidden="true"></i> &nbsp;Akta</small>
                                                     </template>
                                                         <img :src="props.row.akta" class="img-fluid center">
-                                                        
+                                                        <img v-show="!props.row.akta" src="/img/brand/noimage.png" class="center">
                                                 </tab-pane>
                                                 <tab-pane key="tab6">
                                                     <template slot="title">
                                                         <small class="text-uppercase"><i class="fa fa-file" aria-hidden="true"></i>&nbsp;SPKBU</small>
                                                     </template>
                                                         <img :src="props.row.spkbu" class="img-fluid center">
-                                                        
+                                                        <img v-show="!props.row.spkbu" src="/img/brand/noimage.png" class="center">
                                                 </tab-pane>
                                                 <tab-pane key="tab5">
                                                     <template slot="title">
                                                         <small class="text-uppercase"><i class="fa fa-file-text" aria-hidden="true"></i> &nbsp;Penyataan SIUP</small>
                                                     </template>
                                                         <img :src="props.row.siup" class="img-fluid center">
-                                                        
+                                                        <img v-show="!props.row.siup" src="/img/brand/noimage.png" class="center">
                                                 </tab-pane>
                                                 <tab-pane key="tab4">
                                                     <template slot="title">
                                                         <small class="text-uppercase"><i class="fa fa-file-image-o" aria-hidden="true"></i> &nbsp;Pas Foto</small>
                                                     </template>
                                                         <img :src="props.row.foto" class="img-fluid center">
-                                                        
+                                                        <img v-show="!props.row.foto" src="/img/brand/noimage.png" class="center">
                                                 </tab-pane>
                                             </card>
                                         </tabs>
@@ -166,263 +178,7 @@
             </div>
         </div>
         
-        <!-- format surat -->
-        <modal :show.sync="modals.modal2">
-            <section class="panel">
-                <div class="panel-body">
-                    <div class="invoice">
-                        <header class="clearfix">
-                            <div class="row">
-                                <div class="col-sm-2 mt-md">
-                                    <div class="ib ml-5">
-                                        <img src="img/brand/pemkot.png" height="150px" alt="pemkotMKS" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-9 mt-md text-center ml-3">
-                                    <h5>PEMERINTAH KOTA MAKASSAR</h5>
-                                    <h3> KANTOR DINAS PERINDUSTRIAN PERDAGANGAN DAN PENANAMAN MODAL</h3>
-                                    
-                                    <h6> Jalan Rappocini Raya Nomor 219 Telepon 0411 - 453325</h6>
-                    
-                                    <h5>MAKASSAR</h5>                                
-                                </div>
-                            </div>
-                        </header>
-                        <div class="bill-info">
-                            <div class="row">
-                                <div class="col-md-6">
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="bill-data text-right">
-                                        <p class="mb-none">
-                                            <span class="text-dark">Kode Pos 90222</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr size="20" class="mt-0">
-                        <div class="row">
-                            <div class="col-md-10">
-                                Nomor Seri : 08 / 00476 / 2019
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <h6>SURAT IZIN WALIKOTA MAKASSAR</h6>
-                                Nomor : 503/0345/SIUPM-P/13/KPAP
-                                <h6>TENTANG</h6>
-                                <h6>SURAT IZIN USAHA PERDAGANGAN MENEGAH<br>
-                                    WALIKOTA MAKASSAR
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                Dasar :
-                            </div>
-                            <div class="col-md-10">
-                                <ol>
-                                    <li>Peraturan Daerah Kota Makassar Nomor 11 Tahun 2014 tentang Pengaturan dan Pemungutan Retribusi Usaha
-                                        di bidang Perindustrian dan Perdangangan Kota Makassar (Lembaran Daerah Kota Makassar Nomor 25 Tahun 2004, 
-                                        Seri C Nomor 8)
-                                    </li>
-                                    <li>Rekomendasi dari Dinas Perindustrian Perdagangan dan Penanaman Modal Nomor <b> 0420/Peridagdal/SIUP/V/2013</b>
-                                        Tanggal <b>21-04-2013</b>
-                                    </li>
-                                    <li>Surat Permohonan <b> {{ printData.nameApplication }} </b> Tanggal <b> TANGGAL DI AJUKAN</b>
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-                                <h6>M E N G I Z I N K A N</h6>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                KEPADA 
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                NAMA 
-                            </div>
-                            <div class="col-md-10">
-                                : <b>{{ printData.nameApplication }}</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                ALAMAT 
-                            </div>
-                            <div class="col-md-10">
-                                : <b>{{ printData.addressApplication }}</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                                UNTUK 
-                            </div>
-                            <div class="col-md-10">
-                                : Melakukan kegiatan Usaha Perdagangan dalam Kota Makassar dengan keterangan sebagai berikut:
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                NAMA PERUSAHAAN  
-                            </div>
-                            <div class="col-md-6 pt-2">
-                                : <b>{{ printData.companyName }}</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                STATUS PERUSAHAAN  
-                            </div>
-                            <div class="col-md-7 pt-2">
-                                : <b>PUSAT</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                ALAMAT PERUSAHAAN  
-                            </div>
-                            <div class="col-md-7 pt-2">
-                                : <b> {{ printData.companyAddress }} {{printData.city}} </b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                NPWP 
-                            </div>
-                            <div class="col-md-7 pt-2">
-                                : <b>NPWP</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                GOLONGAN USAHA 
-                            </div>
-                            <div class="col-md-7 pt-2">
-                                : <b>PERUSAHAAN MENENGAH</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                KEGIATAN USAHA 
-                            </div>
-                            <div class="col-md-7 pt-2">
-                                : <b>{{ printData.mainBusiness }}</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                KELEMBAGAAN 
-                            </div>
-                            <div class="col-md-7 pt-2">
-                                : <b>{{ printData.institutional }}</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                BARANG/JASA DAGANGAN UTAMA 
-                            </div>
-                            <div class="col-md-7 pt-2">
-                                : <b>{{ printData.mainService }}</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                MASA BERLAKU
-                            </div>
-                            <div class="col-md-7 pt-2">
-                                : <b>Masa berlaku</b>
-                            </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-md-11">
-                                Surat Izin Usaha Perdagangan ini berlaku selama jangka waktu 5 (lima) tahun dan diperpanjang setelah masa berlakunya berakhir.
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4 pt-2">
-                            </div>
-                            <div class="col-md-6 pt-2">
-                                Dikeluarkan di Makassar
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2">
-                            </div>
-                            <div class="col-md-4 pt-2">
-                            </div>
-                            <div class="col-md-6">
-                                Pada Tanggal <b>tanggal submit</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-5 pt-2">
-                                <img v-bind:src="printData.foto" height="120px" width="80px" alt="pasFoto" />
-                            </div>
-                            <div class="col-md-6 pt-2">
-                                <b>WALIKOTA MAKASSAR</b><br>
-                                <b>KANTOR DINAS PERINDUSTRIAN PERDAGANGAN DAN PENANAMAN MODAL</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-5 pt-2">
-                            </div>
-                            <div class="col-md-6 pt-2">
-                                <b><u>NIELMA PALAMBA, SH,M.AP</u></b>
-                            </div>
-                        </div>
-                        <div class="row mt-0">
-                            <div class="col-md-1">
-                            </div>
-                            <div class="col-md-5 pt-2">
-                            </div>
-                            <div class="col-md-6">
-                                Pangkat &nbsp; :  &nbsp;  Pembinasa Tk.1 <br>
-                                NIP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; :&nbsp;&nbsp; 19651210 199112 2 001
-                            </div>
-                        </div>
-                        <div class="row pt-2">
-                            <div class="col-md-12">
-                                Tembusan : <br>
-                                    <li> Kepala Dinas Perindustrian Perdagangan dan Penanaman Modal Kota Makassar</li>
-                                    <li> Camat yang bersangkutan</li>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </modal>
+       
         <!-- Modal View -->
         <modal :show.sync="modals.modal1">
             <h6 slot="header" class="modal-title" id="modal-title-default">Data Permohonan {{ this.viewData.companyName }}</h6>
@@ -523,6 +279,128 @@
             </template>
         </modal>
 
+        <!-- Modal Done -->
+        <modal :show.sync="modals.modal2"
+                body-classes="p-0"
+                modal-classes="modal-dialog-centered modal-sm">
+                <h6 slot="header" class="modal-title" id="modal-title-default">Data Permohonan {{ doneId.companyName }}</h6>
+            <card type="secondary" shadow
+                    header-classes="bg-white pb-5"
+                    body-classes="px-lg-5 py-lg-5"
+                    class="border-0">
+                <template>
+                    <div class="text-center text-muted mb-4">
+                        <p class="ff">Silahkan masukkan No.Serial & No.Registrasi </p>
+                    </div>
+                    <form class="was-validated" role="form">
+                        <base-input alternative
+                                    class="mb-0"
+                                    v-model="noSeri"
+                                    placeholder="No.Serial"
+                                    >
+                        </base-input>
+                        <div class="text-muted mb-3">
+                            <small>Contoh: 08/0476 </small>
+                        </div>
+                        <base-input alternative
+                                    class="mb-0"
+                                    v-model="noReg"
+                                    placeholder="No.Registrasi"
+                                    >
+                        </base-input>
+                        <div class="text-muted mb-3">
+                            <small>Contoh: 503/0345 </small>
+                        </div>
+                        <div class="mb-3">
+                            <p class="ff">Note:</p>
+                            <textarea class="form-control" v-model="note" placeholder="Silahkan masukkan note untuk memudahkan user memantau status permohonannya" rows="5"></textarea>
+                        </div>
+                    </form>
+                        <div class="text-center">
+                            <base-button type="primary" @click.prevent="doDone(doneId._id)" class="my-4">Proses</base-button>
+                        </div>
+                </template>
+            </card>
+        </modal>
+
+        <!-- Modal Reject -->
+        <modal :show.sync="modals.modal3"
+                body-classes="p-0"
+                modal-classes="modal-dialog-centered modal-sm">
+                <h6 slot="header" class="modal-title" id="modal-title-default">Data Permohonan {{ rejectId.companyName }}</h6>
+            <card type="secondary" shadow
+                    header-classes="bg-white pb-5"
+                    body-classes="px-lg-5 py-lg-5"
+                    class="border-0">
+                <template>
+                    <div class="text-center text-muted mb-4">
+                        <p>Apakah anda yakin menolak pengajuan permohonan {{ rejectId.companyName }}</p>
+                    </div>
+                    <form class="was-validated" role="form">
+                        <div class="mb-3 text-center">
+                            <label for="validationTextarea">Note:</label>
+                            <textarea class="form-control" v-model="note" placeholder="Silahkan masukkan alasan penolakan permohonan" rows="5"></textarea>
+                        </div>
+                    </form>
+                        <div class="text-center">
+                            <base-button type="primary" @click.prevent="reject(rejectId._id)" class="my-4">Tolak</base-button>
+                        </div>
+                </template>
+            </card>
+        </modal>
+
+        <!-- Modal Procces -->
+        <modal :show.sync="modals.modal4"
+                body-classes="p-0"
+                modal-classes="modal-dialog-centered modal-sm">
+                <h6 slot="header" class="modal-title" id="modal-title-default">Data Permohonan {{ proccesId.companyName }}</h6>
+            <card type="secondary" shadow
+                    header-classes="bg-white pb-5"
+                    body-classes="px-lg-5 py-lg-5"
+                    class="border-0">
+                <template>
+                    <div class="text-center text-muted mb-4">
+                        <p class="ff">Apakah anda yakin melakukan proses dan verifikasi? </p>
+                    </div>
+                    <form class="was-validated" role="form">
+                        <div class="mb-3">
+                            <p class="ff">Note:</p>
+                            <textarea class="form-control" v-model="note" placeholder="Silahkan masukkan note untuk memudahkan user memantau status permohonannya" rows="5"></textarea>
+                        </div>
+                    </form>
+                        <div class="text-center">
+                            <base-button type="primary" @click.prevent="doProcces(proccesId._id)" class="my-4">Proses</base-button>
+                        </div>
+                </template>
+            </card>
+        </modal>
+
+        <!-- modal repair -->
+        <modal :show.sync="modals.modal5"
+                body-classes="p-0"
+                modal-classes="modal-dialog-centered modal-sm">
+                <h6 slot="header" class="modal-title" id="modal-title-default">Data Permohonan {{ repairId.companyName }}</h6>
+            <card type="secondary" shadow
+                    header-classes="bg-white pb-5"
+                    body-classes="px-lg-5 py-lg-5"
+                    class="border-0">
+                <template>
+                    <div class="text-center text-muted mb-4">
+                        <p class="ff">Silahkan masukkan data yang perlu diperbaiki atau diperbaharui</p>
+                    </div>
+                    <form class="was-validated" role="form">
+                        <div class="mb-3">
+                            <p class="ff">Note:</p>
+                            <textarea class="form-control" v-model="note" placeholder="Data yang perlu diperbaiki/diperbaharui" rows="5"></textarea>
+                        </div>
+                    </form>
+                        <div class="text-center">
+                            <base-button type="primary" @click.prevent="doRepair(repairId._id)" class="my-4">teruskan</base-button>
+                        </div>
+                </template>
+            </card>
+        </modal>
+
 
     </div>
 </section>
@@ -536,6 +414,8 @@ import {mapActions, mapState} from 'vuex'
 import moment from 'moment'
 import Modal from "@/components/Modal.vue";
 import Letter from "@/components/Letter.vue"
+import axios from 'axios'
+const baseUrl = `http://localhost:3000`
 
 export default {
     name: 'admin',
@@ -543,19 +423,162 @@ export default {
         Tabs, TabPane, Modal, Letter
     },
     methods: {
-        // formatDate(date) {
-        //     return moment(date).format('DD-MM-YYYY HH:mm:ss');
-        // },
+        toReject(id){
+            this.rejectId = id
+            this.modals.modal3 = true
+        },
+
+        toDone(row){
+            this.doneId = row
+            this.modals.modal2 = true
+        },
+
+        toProcces(row){
+            this.proccesId = row
+            this.modals.modal4 = true
+        },
+
+        toRepair(row){
+            this.repairId = row
+            this.modals.modal5 = true
+        },
+
+        doRepair(id){
+            axios({
+                url: baseUrl +`/api/request/repairRequest/${id}`,
+                method: `PATCH`,
+                data: {
+                    note: this.note
+                }
+            })
+            .then(response =>{
+                this.modals.modal5= false
+                this.$store.dispatch('getAllRequest')
+                this.noSeri = ''
+                this.noReg = ''
+                this.$notify({
+                    group: 'foo',
+                    title: 'Pemberitahuan!',
+                    type: 'success',
+                    text: 'Sukses meneruskan note perbaikan ke user',
+                    duration: 3000,
+                });
+            })
+            .catch(err =>{
+                this.$notify({
+                    group: 'foo',
+                    title: 'Pemberitahuan!',
+                    type: 'warn',
+                    text: 'Gagal Proses!',
+                    duration: 3000,
+                });
+            })
+        },
+
+        doProcces(id){
+            axios({
+                url: baseUrl +`/api/request/proccesRequest/${id}`,
+                method: `PATCH`,
+                data: {
+                    note: this.note
+                }
+            })
+            .then(response =>{
+                this.modals.modal4= false
+                this.$store.dispatch('getAllRequest')
+                this.noSeri = ''
+                this.noReg = ''
+                this.$notify({
+                    group: 'foo',
+                    title: 'Pemberitahuan!',
+                    type: 'success',
+                    text: 'Sukses melakukan proses permohonan',
+                    duration: 3000,
+                });
+            })
+            .catch(err =>{
+                this.$notify({
+                    group: 'foo',
+                    title: 'Pemberitahuan!',
+                    type: 'warn',
+                    text: 'Gagal Proses!',
+                    duration: 3000,
+                });
+            })
+        },
+
+
+
+        doDone(id){
+            axios({
+                url: baseUrl +`/api/request/doneRequest/${id}`,
+                method: `PATCH`,
+                data: {
+                    noSeri: this.noSeri,
+                    noReg: this.noReg,
+                    note: this.note
+                }
+            })
+            .then(response =>{
+                this.modals.modal2 = false
+                this.$store.dispatch('getAllRequest')
+                this.noSeri = ''
+                this.noReg = ''
+                this.$notify({
+                    group: 'foo',
+                    title: 'Permohonan Selesai!',
+                    type: 'success',
+                    text: 'Silahkan di Cetak',
+                    duration: 3000,
+                });
+            })
+            .catch(err =>{
+                this.$notify({
+                    group: 'foo',
+                    title: 'Pemberitahuan!',
+                    type: 'warn',
+                    text: 'Gagal Proses!',
+                    duration: 3000,
+                });
+            })
+        },
+
+        reject(id){
+            axios({
+                url: baseUrl + `/api/request/rejectRequest/${id}`,
+                method: `PATCH`,
+                data: {
+                    note: this.note
+                }
+            })
+            .then(response=>{
+                this.modals.modal3 = false
+                this.$store.dispatch('getAllRequest')
+                this.note = ''
+                this.$notify({
+                    group: 'foo',
+                    title: 'Pemberitahuan!',
+                    type: 'success',
+                    text: 'Sukses reject',
+                    duration: 3000,
+                });
+            })
+            .catch(err =>{
+                this.$notify({
+                    group: 'foo',
+                    title: 'Pemberitahuan!',
+                    type: 'warn',
+                    text: 'Gagal!',
+                    duration: 3000,
+                });
+            })
+        },
+
         view(data){
             this.viewData = data
             this.modals.modal1 = true
         },
-        print(data){
-            this.printData = data
-            this.modals.modal2 = true
-            console.log(this.printData);
-            
-        },
+
         formatDate(tgl) {
             var monthNames = [
                 "January", "February", "March",
@@ -569,15 +592,73 @@ export default {
             return day + '-' + monthNames[monthIndex] + '-' + year;
         },
 
+        del(id){
+            swal({
+                title: "Apakah anda yakin?",
+                text: "Hapus permohonan ini?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then(willDelete =>{
+                if(willDelete){
+                    axios({
+                        url: baseUrl +`/api/request/${id}`,
+                        method: `DELETE`,
+                    })
+                    .then(response =>{
+                        this.$store.dispatch('getAllRequest')
+                        this.$notify({
+                            group: 'foo',
+                            title: 'Pemberitahuan!',
+                            type: 'error',
+                            text: 'Sukses menghapus data',
+                            duration: 3000,
+                        });
+                    })
+                    .catch(err =>{
+                        this.$notify({
+                            group: 'foo',
+                            title: 'Pemberitahuan!',
+                            type: 'error',
+                            text: 'Gagal menghapus permohonan, Silahkan coba beberapa saat lagi',
+                            duration: 3000,
+                        });
+                    })
+                } else {
+                    this.$notify({
+                        group: 'foo',
+                        title: 'Pemberitahuan!',
+                        type: 'warn',
+                        text: 'Batal menghapus data',
+                        duration: 3000,
+                    });
+                }
+            })
+            .catch(err =>{
+                console.log(err);
+            })  
+        }
     },
+
     data() {
         return {
             viewData: [],
+            noSeri: '',
+            noReg: '',
+            note: '',
+            doneId:'',
+            proccesId: '',
+            repairId: '',
             modals: {
                 modal1: false,
-                modal2: false
+                modal2: false,
+                modal3: false,
+                modal4: false,
+                modal5: false,
             },
             printData: [],
+            rejectId : '',
             currentPage: 1,
             elementsPerPage: 3,
             ascending: false,
@@ -660,6 +741,10 @@ export default {
 
 th:nth-child(5) {
   text-align: center;
+}
+
+.ff{
+    font-size: 13px;
 }
 
 .VueTables__child-row-toggler {

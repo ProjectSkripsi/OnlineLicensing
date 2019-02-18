@@ -35,10 +35,10 @@
     <!-- format surat -->
         <div class="container">
             <section class="panel">
-                <div class="panel-body">
+                <div class="panel-body mt-5">
                     <div class="invoice" id="printMe">
                         <header class="clearfix">
-                            <div class="row mt-2">
+                            <div class="row mt-5">
                                 <div class="col-sm-2 mt-md">
                                     <div class="ib ml-5">
                                         <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Coat_of_Arms_of_City_Makassar.png" height="150px" alt="pemkotMKS" />
@@ -70,13 +70,13 @@
                         <hr size="20" class="mt-0">
                         <div class="row">
                             <div class="col-md-10">
-                                Nomor Seri : 08 / 00476 / 2019
+                                Nomor Seri : {{req.noSeri}}/2019
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-center">
                                 <h6>SURAT IZIN WALIKOTA MAKASSAR</h6>
-                                <a>Nomor : 503/0345/SIUPM-P/13/KPAP</a>
+                                <a>Nomor : {{req.noReg}}/SIUPM-P/13/KPAP</a>
                                 <h6 class="pt-1">TENTANG</h6>
                                 <h6>SURAT IZIN USAHA PERDAGANGAN MENEGAH<br>
                                     WALIKOTA MAKASSAR
@@ -131,12 +131,8 @@
                             <div class="col-md-2">
                                 UNTUK 
                             </div>
-                            <div class="col-md-10 ml-0">
-                                <div class="ui-menu">
-                               
-                               <li class="pl-4">: Melakukan kegiatan Usaha Perdagangan dalam Kota Makassar dengan keterangan sebagai berikut:</li>
-                                
-                                </div>
+                            <div class="col-md-10 pl-4">
+                                &nbsp;&nbsp;&nbsp;&nbsp;: Melakukan kegiatan Usaha dalam Kota Makassar dengan keterangan sebagai berikut:
                             </div>
                         </div>
                         <div class="row">
@@ -167,16 +163,6 @@
                             </div>
                             <div class="col-md-5 pt-2">
                                 : <b> {{req.companyAddress}} {{req.city}} {{req.companyContact}}</b>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3 pt-2">
-                                NPWP 
-                            </div>
-                            <div class="col-md-5 pt-2">
-                                : <b>12241526271</b>
                             </div>
                         </div>
                         <div class="row">
@@ -256,7 +242,219 @@
                             <div class="col-md-2">
                             </div>
                             <div class="col-md-4 pt-2">
-                                <img v-bind:src="req.foto" height="150px" width="120px" alt="pasFoto" />
+                                <img v-bind:src="req.foto" height="170px" width="140px" alt="pasFoto" />
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <b>WALIKOTA MAKASSAR</b><br>
+                                <b>KANTOR DINAS PERINDUSTRIAN PERDAGANGAN DAN PENANAMAN MODAL</b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-5 pt-2">
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                <b><u>NIELMA PALAMBA, SH,M.AP</u></b>
+                            </div>
+                        </div>
+                        <div class="row mt-0">
+                            <div class="col-md-1">
+                            </div>
+                            <div class="col-md-5 pt-2">
+                            </div>
+                            <div class="col-md-6">
+                                Pangkat &nbsp; :  &nbsp;  Pembina Tk.1 <br>
+                                NIP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; :&nbsp;&nbsp; 19651210 199112 2 001
+                            </div>
+                        </div>
+                        <div class="row pt-2 mb-5">
+                            <div class="col-md-12">
+                                Tembusan : <br>
+                                    <li> Kepala Dinas Perindustrian Perdagangan dan Penanaman Modal Kota Makassar</li>
+                                    <li> Camat yang bersangkutan</li>
+                            </div>
+                        </div>
+                        
+                        <!-- situ -->
+                       
+                    <div class="container">
+                        <div class="row mt-5">
+                            <div class="col-md-12"></div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-md-12"></div>
+                        </div>
+                        
+                        <header class="clearfix">
+                            <div class="row mt-5">
+                                <div class="col-sm-2 mt-md mt-5">
+                                    <div class="ib ml-5">
+                                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Coat_of_Arms_of_City_Makassar.png" height="150px" alt="pemkotMKS" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-9 mt-md text-center ml-5 mt-5">
+                                    <h5>PEMERINTAH KOTA MAKASSAR</h5>
+                                    <h4> KANTOR DINAS PERINDUSTRIAN PERDAGANGAN DAN PENANAMAN MODAL</h4>
+                                    
+                                    <h6> Jalan Rappocini Raya Nomor 219 Telepon 0411 - 453325</h6>
+                    
+                                    <h5>MAKASSAR</h5>                                
+                                </div>
+                            </div>
+                        </header>
+                        <div class="bill-info">
+                            <div class="row">
+                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="bill-data text-right">
+                                        <p class="mb-none">
+                                            <span class="text-dark">Kode Pos 90222</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr size="20" class="mt-0">
+                        <div class="row">
+                            <div class="col-md-10">
+                                Nomor Seri : {{req.noSeri}}/2019
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h6>SURAT IZIN WALIKOTA MAKASSAR</h6>
+                                <a>Nomor : {{req.noReg}}/SITUM-P/13/KPAP</a>
+                                <h6 class="pt-1">TENTANG</h6>
+                                <h6>SURAT IZIN TEMPAT USAHA(SITU)<br>
+                                    WALIKOTA MAKASSAR
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                Dasar :
+                            </div>
+                            <div class="col-md-10">
+                                <ol>
+                                    <li>Peraturan Daerah Kota Makassar Nomor 11 Tahun 2014 tentang Pengaturan dan Pemungutan Retribusi Usaha
+                                        di bidang Perindustrian dan Perdangangan Kota Makassar (Lembaran Daerah Kota Makassar Nomor 25 Tahun 2004, 
+                                        Seri C Nomor 8)
+                                    </li>
+                                    <li>Rekomendasi dari Dinas Perindustrian Perdagangan dan Penanaman Modal Nomor <b> 0420/Peridagdal/SITU/V/2013</b>
+                                        Tanggal <b>21-04-2013</b>
+                                    </li>
+                                    <li>Surat Permohonan <b> {{req.nameApplication}} </b> Tanggal <b> {{ format_date(req.createdAt) }}</b>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <h6>MEMEBERIKAN IZIN TEMPAT USAHA</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                KEPADA 
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                NAMA 
+                            </div>
+                            <div class="col-md-8 ml-4">
+                                : &nbsp;<b>{{req.nameApplication}}</b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                ALAMAT 
+                            </div>
+                            <div class="col-md-8 ml-4">
+                               :&nbsp;  <b> {{req.addressApplication}} </b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                UNTUK 
+                            </div>
+                            <div class="col-md-10 pl-4">
+                                &nbsp;&nbsp;&nbsp;&nbsp;: Melakukan kegiatan Usaha dalam Kota Makassar dengan keterangan sebagai berikut:
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3 pt-2">
+                                NAMA PERUSAHAAN  
+                            </div>
+                            <div class="col-md-5 pt-2">
+                                : <b>{{req.companyName}}</b>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3 pt-2">
+                                ALAMAT PERUSAHAAN/TELEPON
+                            </div>
+                            <div class="col-md-5 pt-2">
+                                : <b> {{req.companyAddress}} {{req.city}} {{req.companyContact}}</b>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3 pt-2">
+                                KEGIATAN USAHA 
+                            </div>
+                            <div class="col-md-5 pt-2">
+                                : <b>{{req.mainBusiness}}</b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3 pt-2">
+                                MASA BERLAKU
+                            </div>
+                            <div class="col-md-5 pt-2">
+                                : <b>Masa berlaku</b>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-11">
+                                Surat Izin Tempat Usaha  ini berlaku selama jangka waktu 5 (lima) tahun dan diperpanjang setelah masa berlakunya berakhir.
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-4 pt-2">
+                            </div>
+                            <div class="col-md-6 pt-2">
+                                Dikeluarkan di Makassar
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-4 pt-2">
+                            </div>
+                            <div class="col-md-6">
+                                Pada Tanggal <b>{{format_date(req.updatedAt)}}</b>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">
+                            </div>
+                            <div class="col-md-4 pt-2">
+                                <img v-bind:src="req.foto" height="170px" width="140px" alt="pasFoto" />
                             </div>
                             <div class="col-md-6 pt-2">
                                 <b>WALIKOTA MAKASSAR</b><br>
@@ -290,6 +488,7 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </section>
             <div class="row mt-5">
@@ -306,9 +505,11 @@
             </div>
         </div>
 
-        <footer class="footer has-cards">
+
+    <!-- footer -->
+    <footer class="footer has-cards">
         <div class="container container-lg">
-           
+        
         </div>
         <div class="container">
             <div class="row row-grid align-items-center my-md">
@@ -356,7 +557,10 @@ export default {
         BaseNav, CloseButton, BaseDropdown
     },
     computed: {
-        ...mapState(['user'])
+        ...mapState(['user']),
+        isLoggedIn : function(){
+            return this.$store.getters.isLoggedIn
+        },
     },
     methods: {
         getRequest(){
@@ -382,6 +586,13 @@ export default {
             if (value) {
                 return moment(String(value)).format('DD-MM-YYYY')
             }
+        },
+        doLogout: function(){
+            localStorage.removeItem('token')
+            this.$store.dispatch('logout')
+            .then(()=>{
+                this.$router.push('/')
+            })
         },
     },
     created() {

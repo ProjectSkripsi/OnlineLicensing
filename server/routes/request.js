@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const upload = require('../helpers/picture')
 const {isLogin} = require('../middlewares/auth')
-const {addRequest, test, getRequest, myRequest, newRequest, addKtp, editRequest, allDone, MyDoneRequest,allNewRequest, myIncorrect, myReject, allIncorrect, addAkta,
-    onRequest, addNPWP, addSpkbu, addSIUP, addFoto, allOnProcces, deleteRequest, getOneReq} = require('../controllers/request-controllers')
+const {addRequest, rejectRequest, getRequest, myRequest, newRequest, addKtp, editRequest, allDone, MyDoneRequest,allNewRequest, myIncorrect, 
+    myReject, allIncorrect, addAkta,onRequest, addNPWP, addSpkbu, addSIUP, addFoto, allOnProcces, doneRequest, proccesRequest, repairRequest,
+    deleteRequest, getOneReq} = require('../controllers/request-controllers')
 
 router.post('/', isLogin, addRequest)
 router.get('/getRequest', getRequest)
@@ -26,7 +27,10 @@ router.get('/myIncorrect', isLogin, myIncorrect)
 router.get('/myReject', isLogin, myReject)
 router.get('/allIncorrect', allIncorrect)
 router.get('/:id', getOneReq)
-
+router.patch('/rejectRequest/:id', rejectRequest)
+router.patch('/doneRequest/:id', doneRequest)
+router.patch('/proccesRequest/:id', proccesRequest)
+router.patch('/repairRequest/:id', repairRequest)
 
 router.post('/upload',
     upload.multer.single('image'), 
