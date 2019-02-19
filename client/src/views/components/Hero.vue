@@ -44,4 +44,4 @@ export default {};
 <style>
 </style>
 
-JAKEVO adalah aplikasi perizinan online dari DPMPTSP DKI Jakarta. Kini, hanya dengan 3 langkah mudah permohonan izin SIUP &amp; TDP Anda bisa diajukan.
+

@@ -72,7 +72,8 @@
 import {mapActions, mapState} from 'vuex'
 import swal from 'sweetalert';
 import axios from 'axios'
-const baseUrl = `http://localhost:3000`
+// const baseUrl = `http://localhost:3000`
+const baseUrl = `http://35.185.183.4`
 export default {
     data() {
         return {
@@ -85,6 +86,7 @@ export default {
     methods: {
         // ...mapActions(['signup']),
         doSignUp(){
+            console.log(this.password);
             if(this.password === ''){
                 swal({
                     title: "Notice",
@@ -102,6 +104,7 @@ export default {
                     }
                 })
                 .then(response =>{
+                    console.log(response.data);
                     swal("Good job!",response.data, "success");
                     this.$router.push('/confirmation')
                 })
@@ -113,7 +116,8 @@ export default {
                             text: 'email already registered!',
                             icon: "error",
                         });
-                    } else if (err.response.status === 500) {
+                    } 
+                    else if (err.response.status === 500) {
                         swal({
                             title: "Notice",
                             text: `Please input name & password incorrect`,

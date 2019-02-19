@@ -3,6 +3,7 @@ const hash = require('../helpers/hash')
 const Token = require('../models/Token')
 const randomstring = require("randomstring");
 const nodemailer = require('nodemailer')
+var smtpTransport = require('nodemailer-smtp-transport');
 const bcrypt = require('bcryptjs')
 require('dotenv').config()
 
@@ -26,15 +27,16 @@ module.exports = {
                     })
                     token.save(function (err) {
                         if (err) { return res.status(500).json({ msg: err.message }); }
-                        var transporter = nodemailer.createTransport({ 
+                        var transporter = nodemailer.createTransport(smtpTransport({ 
                             service: 'gmail',
+                            host: 'smtp.gmail.com',
                             auth: {
                                 user: process.env.EMAIL,
                                 pass: process.env.PASSWORD
                             }
-                        });
+                        }));
                         var mailOptions = { 
-                            from: 'no-reply@yourwebapplication.com', 
+                            from: 'no-reply@siup-makassar.info', 
                             to: newUser.email, 
                             subject: 'Account Verification', 
                             text: 'Hello,\n\n' + 'Please verify your account by the code: '+ token.token + '\n' 

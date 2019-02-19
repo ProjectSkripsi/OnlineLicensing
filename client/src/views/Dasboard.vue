@@ -701,7 +701,8 @@ import Tabs from "@/components/Tabs/Tabs.vue";
 import TabPane from "@/components/Tabs/TabPane.vue";
 import axios from 'axios'
 import swal from 'sweetalert'
-const baseUrl = `http://localhost:3000`
+// const baseUrl = `http://localhost:3000`
+const baseUrl = `http://35.185.183.4`
 
 
 export default {
