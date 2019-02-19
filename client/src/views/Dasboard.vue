@@ -25,7 +25,7 @@
                         <span class="nav-link-inner--text">{{ user.name }}</span>
                     </a>
                     <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
-                    <router-link to="/profile" class="dropdown-item">Profile</router-link>
+                    <!-- <router-link to="/profile" class="dropdown-item">Profile</router-link> -->
                     <a href="#"  @click.prevent="doLogout"><router-link to="/" class="dropdown-item">  Logout </router-link></a>
                 </base-dropdown>
             </ul>
@@ -51,68 +51,68 @@
                                     <template slot="title">
                                         <i class="fa fa-home" aria-hidden="true"></i> Dashboard
                                     </template>
-                                    
-                                        <div class="container">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-12">
-                                                    <div class="row row-grid">
-                                                        <div class="col-lg-4">
-                                                            <card class="border-0 text-center" hover shadow body-classes="py-5">
-                                                                <img src="img/icons/icon-izin-baru.png" height="100px">
-                                                                <h6>Izin Baru</h6>
-                                                                <p class="description mt-3"> {{ myNewRequest.length }} </p>
-                                                                
-                                                            </card>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <card class="border-0 text-center" hover shadow body-classes="py-5">
-                                                                <img src="img/icons/izin-dalam-proses.png" height="100px">
-                                                                <h6>Izin dalam proses</h6>
-                                                                <p class="description mt-3"> {{ myOnProcces.length }}</p>
-                                                            </card>
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <card class="border-0 text-center" hover shadow body-classes="py-5">
-                                                                <img src="img/icons/icon-izin-selesai.png" height="100px">
-                                                                <h6>Izin Selesai</h6>
-                                                                <p class="description mt-3">{{myRequestDone.length}} </p>
-                                                            </card>
-                                                        </div>
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-12">
+                                                <div class="row row-grid">
+                                                    <div class="col-lg-4">
+                                                        <card class="border-0 text-center" hover shadow body-classes="py-5">
+                                                            <img src="img/icons/icon-izin-baru.png" height="100px">
+                                                            <h6>Izin Baru</h6>
+                                                            <p class="description mt-3"> {{ myNewRequest.length }} </p>
+                                                            
+                                                        </card>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <card class="border-0 text-center" hover shadow body-classes="py-5">
+                                                            <img src="img/icons/izin-dalam-proses.png" height="100px">
+                                                            <h6>Izin dalam proses</h6>
+                                                            <p class="description mt-3"> {{ myOnProcces.length }}</p>
+                                                        </card>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <card class="border-0 text-center" hover shadow body-classes="py-5">
+                                                            <img src="img/icons/icon-izin-selesai.png" height="100px">
+                                                            <h6>Izin Selesai</h6>
+                                                            <p class="description mt-3">{{myRequestDone.length}} </p>
+                                                        </card>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    
-                                        <div class="container">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-12">
-                                                    <div class="row row-grid">
-                                                        <div class="col-lg-4 mt-5">
-                                                            <card class="border-0 text-center" hover shadow body-classes="py-5">
-                                                                <img src="img/icons/icon-izin-perbaikan.png" height="100px">
-                                                                <h6>Izin Butuh Perbaikan</h6>
-                                                                <p class="description mt-3"><b> {{ myIncorrect.length }}</b></p>
-                                                                
-                                                            </card>
-                                                        </div>
-                                                        <div class="col-lg-4 mt-5">
-                                                            <card class="border-0 text-center" hover shadow body-classes="py-5">
-                                                                <img src="img/icons/icon-izin-ditolak.png" height="100px">
-                                                                <h6>Izin Ditolak</h6>
-                                                                <p class="description mt-3">{{allMyReject.length}} </p>
-                                                            </card>
-                                                        </div>
-                                                        <div class="col-lg-4 mt-5">
-                                                            <card class="border-0 text-center" hover shadow body-classes="py-5">
-                                                                <img src="img/icons/icon-izin-perusahaan.png" height="100px">
-                                                                <h6>Total Perusahaan</h6>
-                                                                <p class="description mt-3"> {{ myRequest.length }} </p>
-                                                            </card>
-                                                        </div>
+                                    </div>
+                                
+                                    <div class="container">
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-12">
+                                                <div class="row row-grid">
+                                                    <div class="col-lg-4 mt-5">
+                                                        <card class="border-0 text-center" hover shadow body-classes="py-5">
+                                                            <img src="img/icons/icon-izin-perbaikan.png" height="100px">
+                                                            <h6>Izin Butuh Perbaikan</h6>
+                                                            <p class="description mt-3"><b> {{ myIncorrect.length }}</b></p>
+                                                            
+                                                        </card>
+                                                    </div>
+                                                    <div class="col-lg-4 mt-5">
+                                                        <card class="border-0 text-center" hover shadow body-classes="py-5">
+                                                            <img src="img/icons/icon-izin-ditolak.png" height="100px">
+                                                            <h6>Izin Ditolak</h6>
+                                                            <p class="description mt-3">{{allMyReject.length}} </p>
+                                                        </card>
+                                                    </div>
+                                                    <div class="col-lg-4 mt-5">
+                                                        <card class="border-0 text-center" hover shadow body-classes="py-5">
+                                                            <img src="img/icons/icon-izin-perusahaan.png" height="100px">
+                                                            <h6>Total Perusahaan</h6>
+                                                            <p class="description mt-3"> {{ myRequest.length }} </p>
+                                                        </card>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    
                                    
                                 </tab-pane>
                                 <tab-pane key="tab2">
@@ -190,7 +190,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <p class="description">Provinsi:</p><input type="text" v-model="province" placeholder="Provinsi" class="form-control" />
+                                                            <p class="description">Provinsi:</p><input type="text" value="Sulawesi Selatan" disabled class="form-control" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -440,10 +440,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-if="myRequest.length === 0">
+                                            <tr v-show="!myRequest.length">
                                                 <td class="text-center" colspan="6">No data avaible</td>
                                             </tr>
-                                            <tr v-else v-for="data in myRequest" :key="data._id">
+                                            <tr v-show="myRequest.length" v-for="data in myRequest" :key="data._id">
                                                 <td>{{ data.companyName }}</td>
                                                 <td class="text-center"><i class="fa fa-check" aria-hidden="true" v-if="data.ktp"></i> <i class="fa fa-times" v-else aria-hidden="true"></i> </td>
                                                 <td class="text-center"><i class="fa fa-check" aria-hidden="true" v-if="data.npwp"></i> <i class="fa fa-times" v-else aria-hidden="true"></i> </td>
@@ -470,10 +470,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-if="myRequest.length === 0">
+                                            <tr  v-show="!myRequest.length">
                                                 <td class="text-center" colspan="6">No data avaible</td>
                                             </tr>
-                                            <tr v-else v-for="data in myRequest" :key="data._id">
+                                            <tr v-show="myRequest.length" v-for="data in myRequest" :key="data._id">
                                                 <td>{{ data.nameApplication }} </td>
                                                 <td>{{ data.companyName }}</td>
                                                 <td>{{ formatDate(data.createdAt) }}</td>
@@ -571,7 +571,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <p class="description">Provinsi:</p><input type="text" v-model="updateRequest.province" placeholder="Provinsi" class="form-control" />
+                                                    <p class="description">Provinsi:</p><input type="text" value="Sulawesi Selatan" disabled placeholder="Provinsi" class="form-control" />
                                                 </div>
                                             </div>
                                         </div>
@@ -701,8 +701,8 @@ import Tabs from "@/components/Tabs/Tabs.vue";
 import TabPane from "@/components/Tabs/TabPane.vue";
 import axios from 'axios'
 import swal from 'sweetalert'
-const baseUrl = `http://localhost:3000`
-// const baseUrl = `http://35.185.183.4`
+// const baseUrl = `http://localhost:3000`
+const baseUrl = `http://35.185.183.4`
 
 
 export default {
@@ -733,7 +733,6 @@ export default {
             companyName: '',
             companyAddress: '',
             companyContact: '',
-            province: '',
             city: '',
             district: '',
             village: '',
@@ -770,7 +769,6 @@ export default {
                     companyName: this.companyName ,
                     companyAddress: this.companyAddress ,
                     companyContact: this.companyContact ,
-                    province: this.province ,
                     city: this.city ,
                     district: this.district ,
                     village: this.village ,
@@ -805,7 +803,6 @@ export default {
                 this.companyName = ''
                 this.companyAddress = ''
                 this.companyContact = ''
-                this.province = ''
                 this.city = ''
                 this.district = ''
                 this.village = ''

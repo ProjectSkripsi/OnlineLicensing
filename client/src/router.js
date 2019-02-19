@@ -12,8 +12,6 @@ import Dashboard from "./views/Dasboard.vue";
 Vue.use(Router);
 
 let router = new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
   linkExactActiveClass: "active",
   routes: [
     {

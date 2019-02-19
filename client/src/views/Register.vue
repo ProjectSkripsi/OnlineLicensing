@@ -72,8 +72,8 @@
 import {mapActions, mapState} from 'vuex'
 import swal from 'sweetalert';
 import axios from 'axios'
-const baseUrl = `http://localhost:3000`
-// const baseUrl = `http://35.185.183.4`
+// const baseUrl = `http://localhost:3000`
+const baseUrl = `http://35.185.183.4`
 export default {
     data() {
         return {

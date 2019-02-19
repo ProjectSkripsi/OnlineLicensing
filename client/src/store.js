@@ -5,8 +5,8 @@ import swal from 'sweetalert';
 import Notify from 'vue-notify-me'
 import router from 'vue-router'
 import { stat } from 'fs';
-const baseUrl = `http://localhost:3000`
-// const baseUrl = `http://35.185.183.4`
+// const baseUrl = `http://localhost:3000`
+const baseUrl = `http://35.185.183.4`
 
 
 Vue.use(Vuex)
@@ -89,7 +89,6 @@ export default new Vuex.Store({
 
     actions: {
         login({commit}, user){
-            console.log(`masuk`, user);
 	        return new Promise((resolve, reject) => {
 	            commit('auth_request')
 	            axios({
@@ -105,7 +104,7 @@ export default new Vuex.Store({
 	                localStorage.setItem('token', token)
 	                axios.defaults.headers.common['Authorization'] = token
 					resolve(resp)
-					window.location = '/dashboard'
+					window.location = '/#/dashboard'
 	            })
 	            .catch(err => {
 					if(err.response.status === 400){

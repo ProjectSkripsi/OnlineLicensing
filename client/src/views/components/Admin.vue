@@ -415,8 +415,8 @@ import moment from 'moment'
 import Modal from "@/components/Modal.vue";
 import Letter from "@/components/Letter.vue"
 import axios from 'axios'
-const baseUrl = `http://localhost:3000`
-// const baseUrl = `http://35.185.183.4`
+// const baseUrl = `http://localhost:3000`
+const baseUrl = `http://35.185.183.4`
 
 export default {
     name: 'admin',

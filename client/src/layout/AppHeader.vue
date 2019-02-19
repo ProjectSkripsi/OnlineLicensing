@@ -43,7 +43,7 @@
                         <span class="nav-link-inner--text">{{ user.name }}</span>
                     </a>
                     <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
-                    <router-link to="/profile" class="dropdown-item">Profile</router-link>
+                    <!-- <router-link to="/profile" class="dropdown-item">Profile</router-link> -->
                     <a href="#"  @click.prevent="doLogout"><router-link to="/" class="dropdown-item">  Logout </router-link></a>
                 </base-dropdown>
             </ul>

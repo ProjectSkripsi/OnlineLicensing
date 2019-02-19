@@ -24,7 +24,7 @@
                                 <span class="nav-link-inner--text">{{ user.name }}</span>
                             </a>
                             <router-link to="/dashboard" class="dropdown-item">Dashboard</router-link>
-                            <router-link to="/profile" class="dropdown-item">Profile</router-link>
+                            <!-- <router-link to="/profile" class="dropdown-item">Profile</router-link> -->
                             <a href="#"  @click.prevent="doLogout"><router-link to="/" class="dropdown-item">  Logout </router-link></a>
                         </base-dropdown>
                     </ul>
@@ -542,8 +542,8 @@ import CloseButton from "@/components/CloseButton";
 import BaseDropdown from "@/components/BaseDropdown";
 import axios from 'axios';
 import moment from 'moment'
-const baseUrl = `http://localhost:3000`
-// const baseUrl = `http://35.185.183.4`
+// const baseUrl = `http://localhost:3000`
+const baseUrl = `http://35.185.183.4`
 
 export default {
     name: 'letter',
