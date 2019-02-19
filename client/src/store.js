@@ -5,8 +5,8 @@ import swal from 'sweetalert';
 import Notify from 'vue-notify-me'
 import router from 'vue-router'
 import { stat } from 'fs';
-// const baseUrl = `http://localhost:3000`
-const baseUrl = `http://35.185.183.4`
+const baseUrl = `http://localhost:3000`
+// const baseUrl = `http://35.185.183.4`
 
 
 Vue.use(Vuex)

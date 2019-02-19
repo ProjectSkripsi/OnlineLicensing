@@ -7,6 +7,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const indexRouter = require('./routes/index');
 const app = express();
+const history = require('connect-history-api-fallback')
 const database = process.env.DATABASE
 
 mongoose.connect(database, { useNewUrlParser: true })
@@ -16,6 +17,7 @@ db.once('open', function () {
     console.log(`Database is Connecting`);
 });
 app.use(cors())
+app.use(history())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

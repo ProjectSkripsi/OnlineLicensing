@@ -9,7 +9,6 @@ import Confirmation from "./views/Confirmation.vue";
 import Register from "./views/Register.vue";
 import Profile from "./views/Profile.vue";
 import Dashboard from "./views/Dasboard.vue";
-import Letter from "./views/Letter.vue";
 Vue.use(Router);
 
 let router = new Router({
@@ -18,15 +17,6 @@ let router = new Router({
   linkExactActiveClass: "active",
   routes: [
     {
-      path: "/landing",
-      name: "components",
-      components: {
-        header: AppHeader,
-        default: Components,
-        footer: AppFooter
-      }
-    },
-    {
       path: "/",
       name: "landing",
       components: {
@@ -34,6 +24,15 @@ let router = new Router({
         default: Landing,
         footer: AppFooter
       },
+    },
+    {
+      path: "/landing",
+      name: "components",
+      components: {
+        header: AppHeader,
+        default: Components,
+        footer: AppFooter
+      }
     },
     {
       path: '/dashboard',
